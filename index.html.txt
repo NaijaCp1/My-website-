@@ -1,0 +1,37 @@
+Naija Cp, [Sep 29, 2026 at 11:56 AM]
+<span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> ${val}</span>
+          <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> ${val}</span>
+          <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> ${val}</span>
+        `;
+        showToast('Ticker updated live!');
+      }
+    }
+
+    function showToast(message) {
+      const container = document.getElementById('liveToastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-enter p-3 rounded-2xl bg-slate-900 border border-pink-500/40 text-white text-xs shadow-xl flex items-center gap-2.5 mb-2';
+      toast.innerHTML = <i class="fa-solid fa-circle-check text-pink-400 text-sm"></i> <span>${message}</span>;
+
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.className = 'toast-exit p-3 rounded-2xl bg-slate-900 border border-pink-500/40 text-white text-xs shadow-xl flex items-center gap-2.5 mb-2';
+        setTimeout(() => toast.remove(), 400);
+      }, 3000);
+    }
+
+    setInterval(() => {
+      const counterEl = document.getElementById('liveUserCounter');
+      if (counterEl) {
+        const curr = parseInt(counterEl.innerText.replace(',', ''));
+        const diff = Math.floor(Math.random() * 11) - 5;
+        counterEl.innerText = (curr + diff).toLocaleString();
+      }
+    }, 4000);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderGames();
+    });
+  </script>
+</body>
+</html>
