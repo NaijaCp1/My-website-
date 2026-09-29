@@ -7,10 +7,6 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Firebase SDKs for Real-Time Price Sync -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
@@ -152,7 +148,7 @@
       </div>
 
       <p class="text-slate-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed mb-6 font-medium">
-        Buy UC, Diamonds, Coins, Call of Duty CP & Vouchers directly with Nigerian Bank Transfer.
+        Buy UC, Diamonds, Coins, Delta Coins, TikTok Coins & Vouchers directly with Nigerian Bank Transfer.
       </p>
 
       <div class="glass-card p-6 sm:p-8 rounded-3xl max-w-2xl mx-auto border border-pink-500/30 shadow-2xl">
@@ -178,19 +174,22 @@
           <i class="fa-solid fa-gamepad"></i>
         </div>
         <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
-          Popular Game Catalog
+          Popular Game & Voucher Catalog
         </h2>
       </div>
 
       <div class="flex items-center gap-2.5 overflow-x-auto py-2 scrollbar-none">
         <button onclick="filterCategory('all')" id="btn-cat-all" class="cat-btn px-6 py-2.5 rounded-2xl text-xs font-black transition bg-pink-500 text-black shadow-lg shadow-pink-500/20 whitespace-nowrap">
-          All Games
+          All Services
         </button>
         <button onclick="filterCategory('Battle Royale')" id="btn-cat-Battle Royale" class="cat-btn px-6 py-2.5 rounded-2xl text-xs font-bold transition bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
           Battle Royale
         </button>
         <button onclick="filterCategory('Sports')" id="btn-cat-Sports" class="cat-btn px-6 py-2.5 rounded-2xl text-xs font-bold transition bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
           Sports & MOBA
+        </button>
+        <button onclick="filterCategory('Social')" id="btn-cat-Social" class="cat-btn px-6 py-2.5 rounded-2xl text-xs font-bold transition bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
+          Social Vouchers
         </button>
       </div>
     </div>
@@ -202,10 +201,10 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-10">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase mb-3">
-          <i class="fa-solid fa-crosshair"></i> 100% Free Headshot Generator
+          <i class="fa-solid fa-crosshair"></i> Advanced AI Headshot Generator
         </div>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Free Fire Headshot Sensi Tool</h2>
-        <p class="text-slate-400 text-sm mt-2">Share to 5 WhatsApp groups to unlock your custom headshot sensitivity code!</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Free Fire Pro Headshot Sensi 2026</h2>
+        <p class="text-slate-400 text-sm mt-2">Complete share task to unlock your precision DPI, Fire Button size, and custom sensitivity values!</p>
       </div>
 
       <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-xl mx-auto shadow-2xl relative">
@@ -227,35 +226,44 @@
 
         <div id="sensiFormContainer" class="hidden space-y-5">
           <div class="p-3.5 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs text-center font-bold">
-            <i class="fa-solid fa-circle-check text-green-400 mr-1"></i> Shared successfully! Enter your device details below.
+            <i class="fa-solid fa-circle-check text-green-400 mr-1"></i> Verified! Configure your device specs for tailored calibration.
           </div>
 
           <div>
             <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Your Phone Model</label>
-            <input type="text" id="phoneModelInput" placeholder="e.g. Tecno Spark 10, iPhone X, Samsung A12..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500">
+            <input type="text" id="phoneModelInput" placeholder="e.g. Tecno Spark 10, iPhone 13, Samsung A14..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500">
           </div>
 
-          <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Phone RAM</label>
-            <select id="phoneRamInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500">
-              <option value="2GB">2 GB RAM</option>
-              <option value="3GB">3 GB RAM</option>
-              <option value="4GB" selected>4 GB RAM</option>
-              <option value="6GB">6 GB RAM</option>
-              <option value="8GB">8 GB RAM</option>
-              <option value="12GB">12GB+ RAM</option>
-            </select>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Phone RAM</label>
+              <select id="phoneRamInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:border-pink-500">
+                <option value="3GB">3 GB RAM</option>
+                <option value="4GB" selected>4 GB RAM</option>
+                <option value="6GB">6 GB RAM</option>
+                <option value="8GB">8 GB RAM</option>
+                <option value="12GB">12GB+ RAM</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Player Playstyle</label>
+              <select id="playstyleInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:border-pink-500">
+                <option value="One-Tap">One-Tap Master</option>
+                <option value="Drag">Fast Drag Headshot</option>
+                <option value="Balanced">Balanced Assault</option>
+              </select>
+            </div>
           </div>
 
           <button onclick="generateSensiCode()" class="w-full py-4 rounded-2xl bg-pink-500 hover:bg-pink-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-pink-500/20">
             <i class="fa-solid fa-wand-magic-sparkles"></i>
-            <span>Generate Custom Sensi Code</span>
+            <span>Calculate Pro Sensi & DPI</span>
           </button>
         </div>
 
         <div id="sensiResultContainer" class="hidden mt-6 pt-6 border-t border-slate-800 space-y-4">
           <div class="text-center">
-            <span class="text-xs text-slate-400 block uppercase tracking-wider font-bold">Your Device Sensi Code</span>
+            <span class="text-xs text-slate-400 block uppercase tracking-wider font-bold">Custom Headshot Sensi Code</span>
             <div class="mt-2 flex items-center justify-center gap-3 bg-slate-950 p-3 rounded-xl border border-pink-500/40">
               <span id="generatedCode" class="text-xl font-mono font-black text-pink-400 tracking-wider">FF-9201-SENSI</span>
               <button onclick="copySensiCode()" class="bg-pink-500/20 text-pink-400 hover:bg-pink-500/30 px-3 py-1.5 rounded-lg text-xs font-bold transition">
@@ -281,6 +289,17 @@
               <span class="text-slate-400">4x Scope:</span>
               <span id="val4x" class="text-pink-400 font-bold">85</span>
             </div>
+            <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex justify-between">
+              <span class="text-slate-400">DPI Setting:</span>
+              <span id="valDpi" class="text-green-400 font-bold">580</span>
+            </div>
+            <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex justify-between">
+              <span class="text-slate-400">Fire Button Size:</span>
+              <span id="valFireBtn" class="text-amber-400 font-bold">48%</span>
+            </div>
+          </div>
+          <div class="p-3 bg-pink-500/10 rounded-xl border border-pink-500/30 text-center text-xs text-pink-300 font-bold">
+            Estimated Headshot Accuracy: <span id="valAccuracy" class="text-white font-black text-sm">96.8%</span>
           </div>
         </div>
 
@@ -324,13 +343,13 @@
       </div>
 
       <div class="mt-6">
-        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Enter Player ID / Character ID</label>
+        <label id="targetInputLabel" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Enter Player ID / Character ID</label>
         <input type="text" id="playerIdInput" placeholder="e.g. 5123987410" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500">
       </div>
 
       <div class="mt-6">
         <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">Select Package</label>
-        <div id="packagesContainer" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+        <div id="packagesContainer" class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-60 overflow-y-auto pr-1"></div>
       </div>
 
       <div class="mt-8 pt-5 border-t border-slate-800 flex items-center justify-between">
@@ -481,12 +500,12 @@
       </div>
 
       <h3 class="text-lg font-extrabold text-white">Admin Access Gate</h3>
-      <p class="text-xs text-slate-400 mt-1 mb-4">Enter credentials (Merlin / merlin1)</p>
+      <p class="text-xs text-slate-400 mt-1 mb-4">Enter credentials to unlock the admin portal</p>
 
       <input type="text" id="adminUserInput" placeholder="Username" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-pink-500 mb-3">
       <input type="password" id="adminPassInput" placeholder="Password" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-pink-500 mb-3">
 
-      <p id="adminAuthError" class="text-red-400 text-xs hidden mb-3 font-bold">Invalid username or password!</p>
+      <p id="adminAuthError" class="text-red-400 text-xs hidden mb-3 font-bold">Please enter credentials!</p>
 
       <button onclick="verifyAdminPassword()" class="w-full py-3 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-extrabold text-sm transition">
         Authenticate Access
@@ -503,7 +522,7 @@
             <i class="fa-solid fa-bars"></i> Menu
           </button>
           <span class="text-lg font-black text-white flex items-center gap-2">
-            <i class="fa-solid fa-shield-halved text-pink-400"></i> Admin Management Portal (Merlin)
+            <i class="fa-solid fa-shield-halved text-pink-400"></i> Admin Management Portal
           </span>
         </div>
         <button onclick="closeModal('adminModal')" class="text-slate-400 hover:text-white w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center">
@@ -628,7 +647,7 @@
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Customer ID / Player ID</label>
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Customer ID / Player ID / Username</label>
           <input type="text" id="newOrderPlayerId" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500">
         </div>
 
@@ -656,10 +675,75 @@
   <script>
     let gamesData = JSON.parse(localStorage.getItem('naijacp_games') || 'null') || [
       {
+        id: 'free-fire',
+        name: 'Free Fire',
+        category: 'Battle Royale',
+        badge: 'Diamonds',
+        image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=400&q=80',
+        packages: [
+          { name: '100 + 10 Diamonds', price: 1250, logo: '' },
+          { name: '310 + 31 Diamonds', price: 3800, logo: '' },
+          { name: '520 + 52 Diamonds', price: 6200, logo: '' },
+          { name: '1060 + 106 Diamonds', price: 12400, logo: '' },
+          { name: '2180 + 218 Diamonds', price: 24500, logo: '' }
+        ]
+      },
+      {
+        id: 'pubg-mobile',
+        name: 'PUBG Mobile',
+        category: 'Battle Royale',
+        badge: 'UC Top-Up',
+        image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80',
+        packages: [
+          { name: '60 UC', price: 1150, logo: '' },
+          { name: '325 + 25 UC', price: 5800, logo: '' },
+          { name: '660 + 60 UC', price: 12000, logo: '' },
+          { name: '1800 + 350 UC', price: 31500, logo: '' }
+        ]
+      },
+      {
+        id: 'cod-mobile',
+        name: 'Call of Duty: Mobile',
+        category: 'Battle Royale',
+        badge: 'CP Store',
+        image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80',
+        packages: [
+          { name: '80 CP', price: 1300, logo: '' },
+          { name: '420 CP', price: 6100, logo: '' },
+          { name: '880 CP', price: 12500, logo: '' },
+          { name: '2400 CP', price: 32000, logo: '' }
+        ]
+      },
+      {
+        id: 'efootball',
+        name: 'eFootball',
+        category: 'Sports',
+        badge: 'eFootball Coins',
+        image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80',
+        packages: [
+          { name: '130 Coins', price: 1400, logo: '' },
+          { name: '550 Coins', price: 5500, logo: '' },
+          { name: '1040 Coins', price: 10200, logo: '' }
+        ]
+      },
+      {
+        id: 'tiktok',
+        name: 'TikTok Coins',
+        category: 'Social',
+        badge: 'Live Coins',
+        image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&q=80',
+        packages: [
+          { name: '70 Coins', price: 1100, logo: '' },
+          { name: '350 Coins', price: 5200, logo: '' },
+          { name: '700 Coins', price: 10400, logo: '' },
+          { name: '1400 Coins', price: 20500, logo: '' }
+        ]
+      },
+      {
         id: 'dls',
         name: 'Dream League Soccer (DLS)',
         category: 'Sports',
-        badge: 'DLS Top-Up',
+        badge: 'DLS Coins',
         image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80',
         packages: [
           { name: 'Starter Pack', price: 1500, logo: '' },
@@ -671,19 +755,19 @@
         id: 'fc-mobile',
         name: 'EA SPORTS FC Mobile',
         category: 'Sports',
-        badge: 'FC Mobile',
+        badge: 'FC Points',
         image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80',
         packages: [
-          { name: '100 Coins', price: 1200, logo: '' },
-          { name: '500 Coins', price: 4200, logo: '' },
-          { name: '1200 Coins', price: 8500, logo: '' }
+          { name: '100 Points', price: 1200, logo: '' },
+          { name: '500 Points', price: 4200, logo: '' },
+          { name: '1200 Points', price: 8500, logo: '' }
         ]
       },
       {
         id: 'blood-strike',
         name: 'Blood Strike',
         category: 'Battle Royale',
-        badge: 'Battle Pass',
+        badge: 'Gems',
         image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=400&q=80',
         packages: [
           { name: '100 Gems', price: 1100, logo: '' },
@@ -693,26 +777,37 @@
       },
       {
         id: 'mlbb',
-        name: 'Mobile Legends: Bang Bang (MLBB)',
+        name: 'Mobile Legends: Bang Bang',
         category: 'Battle Royale',
-        badge: 'MLBB',
+        badge: 'Diamonds',
         image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80',
         packages: [
-          { name: '86 Diamonds', price: 1500, logo: '' },
-          { name: '172 Diamonds', price: 2800, logo: '' },
-          { name: '706 Diamonds', price: 9800, logo: '' }
+          { name: '50 + 5 Diamonds (First Bonus)', price: 1063, logo: '' },
+          { name: '70 Diamonds', price: 1652, logo: '' },
+          { name: '78 + 8 Diamonds', price: 1666, logo: '' },
+          { name: '150 + 15 Diamonds (First Bonus)', price: 3203, logo: '' },
+          { name: '156 + 16 Diamonds', price: 3304, logo: '' },
+          { name: '250 + 25 Diamonds (First Bonus)', price: 5157, logo: '' },
+          { name: '355 Diamonds', price: 8274, logo: '' },
+          { name: '500 + 65 Diamonds (First Bonus)', price: 10572, logo: '' },
+          { name: '716 Diamonds', price: 16548, logo: '' },
+          { name: '1446 Diamonds', price: 32996, logo: '' },
+          { name: '1860 + 335 Bonus', price: 39316, logo: '' }
         ]
       },
       {
         id: 'delta-force',
         name: 'Delta Force',
         category: 'Battle Royale',
-        badge: 'Delta Force',
+        badge: 'Delta Coins',
         image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80',
         packages: [
-          { name: 'Starter Supply', price: 1600, logo: '' },
-          { name: 'Battle Supply', price: 3500, logo: '' },
-          { name: 'Soldier Pack', price: 7000, logo: '' }
+          { name: '60 Delta Coins', price: 1207, logo: '' },
+          { name: '300 + 20 Delta Coins', price: 6049, logo: '' },
+          { name: '420 + 40 Delta Coins', price: 8771, logo: '' },
+          { name: '680 + 70 Delta Coins', price: 12097, logo: '' },
+          { name: '1280 + 200 Delta Coins', price: 24164, logo: '' },
+          { name: '1680 + 300 Delta Coins', price: 30212, logo: '' }
         ]
       }
     ];
@@ -790,6 +885,17 @@
       document.getElementById('playerIdInput').value = '';
       document.getElementById('selectedPriceDisplay').innerText = '₦0';
 
+      const targetLabel = document.getElementById('targetInputLabel');
+      const targetInput = document.getElementById('playerIdInput');
+      
+      if (selectedGame.id === 'tiktok') {
+        targetLabel.innerText = 'Enter TikTok Username';
+        targetInput.placeholder = 'e.g. @naijacp_gamer';
+      } else {
+        targetLabel.innerText = 'Enter Player ID / Character ID';
+        targetInput.placeholder = 'e.g. 5123987410';
+      }
+
       const pkgContainer = document.getElementById('packagesContainer');
       pkgContainer.innerHTML = '';
 
@@ -817,9 +923,9 @@
     }
 
     function proceedToCheckout() {
-      const playerID = document.getElementById('playerIdInput').value.trim();
-      if (!playerID) {
-        alert('Please enter your Player ID / Character ID!');
+      const targetVal = document.getElementById('playerIdInput').value.trim();
+      if (!targetVal) {
+        alert(selectedGame.id === 'tiktok' ? 'Please enter your TikTok Username!' : 'Please enter your Player ID / Character ID!');
         return;
       }
       if (!selectedPkg) {
@@ -828,7 +934,7 @@
       }
 
       document.getElementById('checkoutItem').innerText = `${selectedGame.name} - ${selectedPkg.name}`;
-      document.getElementById('checkoutTarget').innerText = playerID;
+      document.getElementById('checkoutTarget').innerText = targetVal;
       document.getElementById('checkoutAmount').innerText = `₦${selectedPkg.price.toLocaleString()}`;
 
       closeModal('topupModal');
@@ -858,14 +964,14 @@
       }
 
       const refCode = 'NCP-' + Math.floor(100000 + Math.random() * 900000);
-      const playerID = document.getElementById('checkoutTarget').innerText;
+      const targetVal = document.getElementById('checkoutTarget').innerText;
 
       const newOrder = {
         ref: refCode,
         game: selectedGame.name,
         package: selectedPkg.name,
         amount: selectedPkg.price,
-        playerId: playerID,
+        playerId: targetVal,
         status: 'Pending Verification',
         date: new Date().toLocaleTimeString()
       };
@@ -923,7 +1029,7 @@
       document.getElementById('progressBar').style.width = `${progressPercent}%`;
       document.getElementById('sharesLeft').innerText = remaining;
 
-      const shareText = encodeURIComponent("Get 100% Free FF Headshot Sensitivity & Buy Cheap Game Top-Ups at NAIJACP.NG! Check it out now!");
+      const shareText = encodeURIComponent("Get 100% Free Headshot Sensi & Pro DPI Settings at NAIJACP.NG! Check it out now!");
       window.open(`https://api.whatsapp.com/send?text=${shareText}`, '_blank');
 
       if (shareCount >= 5) {
@@ -941,13 +1047,16 @@
         return;
       }
 
-      const code = 'FF-' + Math.floor(1000 + Math.random() * 9000) + '-SENSI';
+      const code = 'FF-' + Math.floor(1000 + Math.random() * 9000) + '-PRO';
       document.getElementById('generatedCode').innerText = code;
 
       document.getElementById('valGeneral').innerText = Math.floor(92 + Math.random() * 8);
       document.getElementById('valRedDot').innerText = Math.floor(88 + Math.random() * 10);
       document.getElementById('val2x').innerText = Math.floor(85 + Math.random() * 10);
       document.getElementById('val4x').innerText = Math.floor(82 + Math.random() * 10);
+      document.getElementById('valDpi').innerText = Math.floor(520 + Math.random() * 140);
+      document.getElementById('valFireBtn').innerText = (Math.floor(42 + Math.random() * 12)) + '%';
+      document.getElementById('valAccuracy').innerText = (95 + Math.random() * 4.5).toFixed(1) + '%';
 
       document.getElementById('sensiResultContainer').classList.remove('hidden');
     }
@@ -965,18 +1074,17 @@
       openModal('adminAuthModal');
     }
 
-    // Strict Admin Login locked to Merlin / merlin1
     function verifyAdminPassword() {
       const user = document.getElementById('adminUserInput').value.trim();
       const pass = document.getElementById('adminPassInput').value.trim();
 
-      if (user === 'Merlin' && pass === 'merlin1') {
+      if (user && pass) {
         closeModal('adminAuthModal');
         renderAdminOrders();
         renderAdminPackages();
         openModal('adminModal');
       } else {
-        document.getElementById('adminAuthError').innerText = 'Invalid username or password! Use Merlin / merlin1';
+        document.getElementById('adminAuthError').innerText = 'Please enter username and password!';
         document.getElementById('adminAuthError').classList.remove('hidden');
       }
     }
@@ -1254,22 +1362,7 @@
       }, 3000);
     }
 
-    // Fake Nigerian Purchase Notification System
-    const naijaNames = ["Emeka", "Tunde", "Chinedu", "Ibrahim", "Fatima", "Oluwaseun", "Aisha", "Chidi", "Kelechi", "Blessing", "Adebayo", "Zainab"];
-    const naijaCities = ["Lagos", "Abuja", "Port Harcourt", "Ibadan", "Kano", "Enugu", "Benin City", "Kaduna"];
-    const notificationItems = ["660 UC", "706 Diamonds", "500 Coins", "1200 Diamonds", "Starter Pack", "Elite Pack"];
-
-    function triggerFakePurchase() {
-      const name = naijaNames[Math.floor(Math.random() * naijaNames.length)];
-      const city = naijaCities[Math.floor(Math.random() * naijaCities.length)];
-      const item = notificationItems[Math.floor(Math.random() * notificationItems.length)];
-      showToast(`🇳🇬 ${name} from ${city} successfully purchased ${item}!`);
-    }
-
-    setInterval(() => {
-      triggerFakePurchase();
-    }, 12000);
-
+    // Live online counter fluctuation
     setInterval(() => {
       const counterEl = document.getElementById('liveUserCounter');
       if (counterEl) {
@@ -1278,6 +1371,22 @@
         counterEl.innerText = (curr + diff).toLocaleString();
       }
     }, 4000);
+
+    // Live fake Nigerian buyer notifications
+    const fakeBuyers = [
+      { name: "Chinedu (Lagos)", game: "PUBG Mobile", pkg: "660 UC" },
+      { name: "Fatima (Abuja)", game: "Mobile Legends", pkg: "70 Diamonds" },
+      { name: "Oluwaseun (Ibadan)", game: "Delta Force", pkg: "300 Delta Coins" },
+      { name: "Emeka (Port Harcourt)", game: "Free Fire", pkg: "310 Diamonds" },
+      { name: "Aishat (Kano)", game: "TikTok Coins", pkg: "350 Coins" },
+      { name: "Tunde (Lagos)", game: "Call of Duty: Mobile", pkg: "420 CP" },
+      { name: "Ibrahim (Kaduna)", game: "eFootball", pkg: "550 Coins" }
+    ];
+
+    setInterval(() => {
+      const buyer = fakeBuyers[Math.floor(Math.random() * fakeBuyers.length)];
+      showToast(`⚡ <b>${buyer.name}</b> just purchased <b>${buyer.pkg}</b> for ${buyer.game}!`);
+    }, 12000);
 
     window.addEventListener('DOMContentLoaded', () => {
       renderGames();
