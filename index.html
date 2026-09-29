@@ -97,31 +97,7 @@
     .toast-exit { animation: fadeOutDown 0.4s cubic-bezier(0.7, 0, 0.84, 0) forwards; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-black overflow-hidden">
-
-  <!-- Login Overlay (Added Feature) -->
-  <div id="loginOverlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md">
-    <div class="glass-modal border border-pink-500/40 p-8 rounded-3xl shadow-2xl w-11/12 max-w-md text-center text-white relative overflow-hidden">
-      <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-500/20 blur-3xl rounded-full"></div>
-      <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-pink-500/10 blur-3xl rounded-full"></div>
-      
-      <div class="relative z-10">
-        <div class="w-16 h-16 rounded-2xl bg-pink-500 flex items-center justify-center text-black text-3xl mx-auto mb-5 shadow-lg shadow-pink-500/40">
-          <i class="fa-solid fa-lock"></i>
-        </div>
-        <h2 class="text-2xl font-black mb-2 tracking-tight">Welcome to NAIJACP</h2>
-        <p class="text-xs text-slate-400 mb-8 font-medium">Please log in to access the store and make purchases.</p>
-
-        <button onclick="dismissLogin()" class="w-full mb-4 flex items-center justify-center gap-3 bg-white text-slate-900 py-3.5 rounded-xl font-extrabold hover:bg-gray-200 transition shadow-lg">
-          <i class="fa-brands fa-google text-lg text-blue-500"></i> Continue with Google
-        </button>
-
-        <button onclick="dismissLogin()" class="w-full flex items-center justify-center gap-3 bg-slate-800 border border-slate-700 text-white py-3.5 rounded-xl font-extrabold hover:bg-slate-700 transition shadow-lg">
-          <i class="fa-solid fa-envelope text-lg text-pink-400"></i> Continue with Email
-        </button>
-      </div>
-    </div>
-  </div>
+<body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-black">
 
   <div class="bg-gradient-to-r from-pink-950 via-black to-pink-950 border-b border-pink-500/20 py-2 text-xs text-slate-300 overflow-hidden relative z-50">
     <div class="animate-marquee whitespace-nowrap flex items-center space-x-8" id="tickerContent">
@@ -674,28 +650,6 @@
   </div>
 
   <script>
-    // Added Feature: Hide Login Overlay and restore scrolling
-    function dismissLogin() {
-      document.getElementById('loginOverlay').style.display = 'none';
-      document.body.classList.remove('overflow-hidden');
-      showToast('Login successful!');
-    }
-
-    // Added Feature: Automated Fake Purchase Notifications
-    function startPurchaseNotifications() {
-      const names = ['Emmanuel', 'Chidi', 'Aisha', 'David', 'Tobi', 'Ngozi', 'Samuel', 'Joy', 'Ibrahim'];
-      const games = ['Free Fire Diamonds', 'PUBG Mobile UC', 'Call of Duty CP', 'eFootball Coins', 'EA SPORTS FC Points'];
-      const prices = ['₦1,500', '₦2,500', '₦4,000', '₦5,500', '₦10,000'];
-
-      setInterval(() => {
-        const randomName = names[Math.floor(Math.random() * names.length)];
-        const randomGame = games[Math.floor(Math.random() * games.length)];
-        const randomPrice = prices[Math.floor(Math.random() * prices.length)];
-
-        showToast(`${randomName} just purchased ${randomGame} for ${randomPrice}`);
-      }, 7000); 
-    }
-
     let gamesData = JSON.parse(localStorage.getItem('naijacp_games') || 'null') || [
       {
         id: 'dls',
@@ -1295,6 +1249,23 @@
       }, 3000);
     }
 
+    function triggerRandomPurchaseToast() {
+      const names = [
+        'Emmanuel A.', 'Tunde O.', 'Chinedu K.', 'Abubakar M.', 'Blessing I.',
+        'Yusuf B.', 'Fatima S.', 'Chukwudi E.', 'Ibrahim A.', 'Funke O.',
+        'Ngozi C.', 'David U.', 'Usman H.', 'Kelechi M.', 'Amina K.',
+        'Seyi A.', 'Emeka O.', 'Zainab M.', 'Gideon I.', 'Miracle N.'
+      ];
+      if (!gamesData || gamesData.length === 0) return;
+      const randomGame = gamesData[Math.floor(Math.random() * gamesData.length)];
+      if (!randomGame.packages || randomGame.packages.length === 0) return;
+      const randomPkg = randomGame.packages[Math.floor(Math.random() * randomGame.packages.length)];
+      const randomName = names[Math.floor(Math.random() * names.length)];
+
+      const message = `<span class="font-bold text-white">${randomName}</span> just bought <span class="text-pink-400 font-bold">${randomPkg.name}</span> (${randomGame.name}) for <span class="text-pink-400 font-bold">₦${randomPkg.price.toLocaleString()}</span>`;
+      showToast(message);
+    }
+
     setInterval(() => {
       const counterEl = document.getElementById('liveUserCounter');
       if (counterEl) {
@@ -1306,7 +1277,8 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       renderGames();
-      startPurchaseNotifications(); // Starts the automated popups when page loads
+      setTimeout(triggerRandomPurchaseToast, 3000);
+      setInterval(triggerRandomPurchaseToast, 8000);
     });
   </script>
 </body>
