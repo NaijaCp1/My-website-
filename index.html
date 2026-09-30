@@ -3,1167 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS TOP-UP | Gaming & Social Top-Up Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>NaijaCP | Africa's Top Gaming Marketplace & Digital Top-Up Services</title>
     <style>
-        :root {
-            --bg-main: #0a0a0f;
-            --bg-card: rgba(22, 22, 34, 0.6);
-            --bg-modal: rgba(15, 15, 24, 0.95);
-            --accent-pink: #ff007f;
-            --accent-pink-hover: #ff2a8d;
-            --accent-pink-glow: rgba(255, 0, 127, 0.35);
-            --accent-cyan: #00f0ff;
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --border-highlight: rgba(255, 0, 127, 0.4);
-            --text-main: #ffffff;
-            --text-muted: #94a3b8;
-            --font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-family);
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(255, 0, 127, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.05) 0%, transparent 40%);
-            background-attachment: fixed;
-        }
-
-        /* --- Header & Nav --- */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(10, 10, 15, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-glass);
-        }
-
-        .ticker-wrap {
-            background: rgba(255, 0, 127, 0.1);
-            border-bottom: 1px solid rgba(255, 0, 127, 0.2);
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 6px 0;
-            font-size: 0.85rem;
-            color: #ff80bf;
-        }
-
-        .ticker-move {
-            display: inline-block;
-            animation: ticker 30s linear infinite;
-        }
-
-        @keyframes ticker {
-            0% { transform: translate3d(100%, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            text-decoration: none;
-            color: var(--text-main);
-            letter-spacing: 1px;
-        }
-
-        .brand span { color: var(--accent-pink); }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .live-counter {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 240, 255, 0.1);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: var(--accent-cyan);
-            font-weight: 600;
-        }
-
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-cyan);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-cyan);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 240, 255, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
-        }
-
-        .btn-nav {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glass);
-            color: var(--text-main);
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.88rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-nav:hover {
-            background: var(--accent-pink);
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 15px var(--accent-pink-glow);
-        }
-
-        /* --- Hero Section --- */
-        .hero {
-            max-width: 1200px;
-            margin: 30px auto 20px;
-            padding: 0 20px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #fff 30%, var(--accent-pink) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 600px;
-            margin: 0 auto 25px;
-        }
-
-        /* --- Filters & Search --- */
-        .controls {
-            max-width: 1200px;
-            margin: 0 auto 30px;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .filter-tabs {
-            display: flex;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 4px;
-            border-radius: 10px;
-            border: 1px solid var(--border-glass);
-        }
-
-        .tab-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 8px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.88rem;
-            transition: all 0.3s;
-        }
-
-        .tab-btn.active {
-            background: var(--accent-pink);
-            color: #fff;
-            box-shadow: 0 0 12px var(--accent-pink-glow);
-        }
-
-        /* --- Catalog Grid --- */
-        .catalog-container {
-            max-width: 1200px;
-            margin: 0 auto 60px;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-        }
-
-        .game-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: 16px;
-            overflow: hidden;
-            backdrop-filter: blur(12px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .game-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--border-highlight);
-            box-shadow: 0 10px 30px rgba(255, 0, 127, 0.15);
-        }
-
-        .card-banner {
-            height: 180px;
-            width: 100%;
-            object-fit: cover;
-            border-bottom: 1px solid var(--border-glass);
-            background-color: #12121c;
-        }
-
-        .card-body {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .card-tag {
-            align-self: flex-start;
-            background: rgba(255, 0, 127, 0.15);
-            color: var(--accent-pink);
-            border: 1px solid rgba(255, 0, 127, 0.3);
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 20px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .card-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .btn-topup {
-            margin-top: auto;
-            width: 100%;
-            background: linear-gradient(135deg, var(--accent-pink), #d9006c);
-            border: none;
-            color: #fff;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-topup:hover {
-            opacity: 0.95;
-            box-shadow: 0 0 20px var(--accent-pink-glow);
-        }
-
-        /* --- Tool Section (Free Fire Sensi) --- */
-        .tool-section {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .tool-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(12px);
-        }
-
-        .tool-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .tool-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 0, 127, 0.15);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--accent-pink);
-        }
-
-        .sensi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .sensi-box {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-glass);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .sensi-val {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--accent-cyan);
-            margin-top: 5px;
-        }
-
-        /* --- Modals Framework --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(5, 5, 10, 0.85);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .modal-box {
-            background: var(--bg-modal);
-            border: 1px solid var(--border-glass);
-            width: 100%;
-            max-width: 550px;
-            border-radius: 20px;
-            padding: 25px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal-box {
-            transform: scale(1);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glass);
-            color: var(--text-muted);
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .modal-close:hover {
-            color: #fff;
-            background: var(--accent-pink);
-        }
-
-        .modal-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Form Inputs */
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .form-input, .form-select {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border-glass);
-            color: var(--text-main);
-            padding: 12px 15px;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .form-input:focus, .form-select:focus {
-            border-color: var(--accent-pink);
-        }
-
-        /* Package Selector Grid inside Modal */
-        .pkg-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .pkg-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-glass);
-            border-radius: 12px;
-            padding: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .pkg-item:hover {
-            border-color: rgba(255, 0, 127, 0.5);
-            background: rgba(255, 0, 127, 0.05);
-        }
-
-        .pkg-item.selected {
-            border-color: var(--accent-pink);
-            background: rgba(255, 0, 127, 0.12);
-            box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
-        }
-
-        .pkg-name {
-            font-size: 0.88rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .pkg-price {
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: var(--accent-cyan);
-        }
-
-        .pkg-old-price {
-            font-size: 0.75rem;
-            text-decoration: line-through;
-            color: var(--text-muted);
-            margin-left: 5px;
-        }
-
-        /* Receipt Box in Payment Modal */
-        .receipt-box {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px dashed var(--border-glass);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .receipt-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-        }
-
-        .receipt-row:last-child {
-            margin-bottom: 0;
-            padding-top: 10px;
-            border-top: 1px solid var(--border-glass);
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .receipt-label { color: var(--text-muted); }
-        .receipt-val { color: var(--text-main); font-weight: 600; }
-
-        /* Admin Table */
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 0.88rem;
-        }
-
-        .admin-table th, .admin-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-glass);
-        }
-
-        .admin-table th {
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .btn-sm {
-            padding: 4px 8px;
-            font-size: 0.75rem;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-danger { background: #ff4757; color: #fff; }
-        .btn-edit { background: var(--accent-cyan); color: #000; font-weight: 700; }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 1.8rem; }
-            .pkg-grid { grid-template-columns: 1fr; }
-            .controls { flex-direction: column; align-items: stretch; }
-        }
+        /* Base and Reset */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0b0f19; color: #ffffff; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* Top Banner & Header */
+        .top-banner { background: #ff4757; color: #fff; text-align: center; padding: 10px; font-size: 14px; font-weight: 600; }
+        header { background-color: #151a28; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a3143; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 26px; font-weight: 900; color: #ff4757; letter-spacing: -1px; display: flex; align-items: center; gap: 8px;}
+        .nav-links { display: flex; gap: 25px; display: none; } /* Hidden on small screens */
+        @media (min-width: 992px) { .nav-links { display: flex; } }
+        .nav-links a { font-size: 14px; font-weight: 500; color: #a1a9b8; transition: color 0.2s; }
+        .nav-links a:hover { color: #ff4757; }
+        
+        .auth-buttons button { padding: 8px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; border: none; font-size: 14px; transition: 0.2s; }
+        .btn-login { background: transparent; color: #fff; border: 1px solid #2a3143; margin-right: 10px; }
+        .btn-login:hover { border-color: #ff4757; color: #ff4757; }
+        .btn-register { background: #ff4757; color: #fff; }
+        .btn-register:hover { background: #e04050; }
+
+        /* Hero Banner */
+        .hero { text-align: center; padding: 60px 20px; background: radial-gradient(circle at center, #1f2537 0%, #0b0f19 100%); border-bottom: 1px solid #2a3143; }
+        .hero h1 { font-size: 42px; margin-bottom: 15px; }
+        .hero p { color: #a1a9b8; font-size: 18px; margin-bottom: 30px; }
+
+        /* Main Container & Grids */
+        .container { max-width: 1250px; margin: 0 auto; padding: 50px 20px; }
+        .section-title { font-size: 24px; margin-bottom: 25px; border-left: 4px solid #ff4757; padding-left: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .section-title span.view-all { font-size: 14px; color: #a1a9b8; font-weight: normal; cursor: pointer; }
+        .section-title span.view-all:hover { color: #ff4757; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-bottom: 60px; }
+        
+        /* Product Cards */
+        .card { background: #151a28; border: 1px solid #2a3143; border-radius: 12px; padding: 25px 20px; text-align: center; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .card:hover { transform: translateY(-5px); border-color: #ff4757; box-shadow: 0 10px 20px rgba(255, 71, 87, 0.1); }
+        .card .icon-placeholder { width: 70px; height: 70px; background: linear-gradient(135deg, #2a3143, #151a28); border-radius: 16px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; font-size: 24px; border: 1px solid #2a3143; }
+        .card h3 { font-size: 15px; margin-bottom: 10px; color: #e2e8f0; line-height: 1.4; height: 42px; overflow: hidden; }
+        .card .price { color: #ff4757; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+        .card .old-price { color: #64748b; text-decoration: line-through; font-size: 13px; margin-bottom: 15px; }
+        
+        .btn-action { background: #2a3143; color: #fff; width: 100%; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; transition: background 0.3s; }
+        .btn-action:hover { background: #ff4757; }
+
+        /* Rating Tag */
+        .rating { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; font-size: 12px; color: #fbbf24; font-weight: bold; }
+
+        /* Info Section */
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; background: #151a28; padding: 50px; border-radius: 16px; border: 1px solid #2a3143; }
+        .feature-box h4 { font-size: 18px; color: #ff4757; margin-bottom: 12px; }
+        .feature-box p { color: #8b95a5; font-size: 14px; line-height: 1.7; }
+
+        /* Footer */
+        footer { background: #0b0f19; padding: 40px 20px; text-align: center; border-top: 1px solid #2a3143; margin-top: 40px; color: #64748b; }
+        .footer-links { margin-top: 20px; display: flex; justify-content: center; gap: 25px; }
+        .footer-links a:hover { color: #fff; }
     </style>
 </head>
 <body>
 
-    <!-- Rolling Announcement Ticker -->
-    <div class="ticker-wrap">
-        <div class="ticker-move">
-            🔥 INSTANT DELIVERY: Blood Strike Gold, MLBB Diamonds & TikTok Coins top-ups are active! • Use promo code <b>NEXUS2026</b> for discount • 24/7 Automated Processing Active!
-        </div>
+    <div class="top-banner">
+        Register now to enjoy 15% off new member gift! <a href="#" style="text-decoration: underline;">Go to sign up</a>
     </div>
 
-    <!-- Navigation Bar -->
     <header>
-        <div class="nav-container">
-            <a href="#" class="brand">
-                <i class="fa-solid fa-bolt" style="color: var(--accent-pink);"></i> NEXUS<span>TOPUP</span>
-            </a>
-
-            <div class="nav-actions">
-                <div class="live-counter">
-                    <span class="pulse-dot"></span>
-                    <span id="activeUsersCount">164</span> Active Online
-                </div>
-
-                <button class="btn-nav" onclick="openModal('trackerModal')">
-                    <i class="fa-solid fa-magnifying-glass"></i> Track Order
-                </button>
-
-                <button class="btn-nav" onclick="openAdminPanel()">
-                    <i class="fa-solid fa-user-gear"></i> Admin
-                </button>
-            </div>
+        <div class="logo">🎮 NaijaCP</div>
+        <nav class="nav-links">
+            <a href="#">Games</a>
+            <a href="#">Gadgets</a>
+            <a href="#">Giftcards</a>
+            <a href="#">Social Boost</a>
+            <a href="#">Airtime / Data</a>
+            <a href="#">Betting</a>
+            <a href="#">Utility Bills</a>
+        </nav>
+        <div class="auth-buttons">
+            <button class="btn-login">Sign In</button>
+            <button class="btn-register">Sign Up</button>
         </div>
     </header>
 
-    <!-- Main Hero -->
-    <section class="hero">
-        <h1>Instant Top-Up & Social Coins</h1>
-        <p>Direct automated delivery for Blood Strike, Mobile Legends, and TikTok Coins with unbeatable regional rates.</p>
-    </section>
-
-    <!-- Controls / Filters -->
-    <div class="controls">
-        <div class="filter-tabs">
-            <button class="tab-btn active" onclick="filterCatalog('all', this)">All Direct Items</button>
-            <button class="tab-btn" onclick="filterCatalog('Game', this)">Games</button>
-            <button class="tab-btn" onclick="filterCatalog('Social', this)">Social Services</button>
-        </div>
+    <div class="hero">
+        <h1>Top up your favorite games fast.</h1>
+        <p>Africa's Top Gaming Marketplace & Digital Top-Up Services</p>
     </div>
 
-    <!-- Catalog Display Grid -->
-    <main class="catalog-container" id="catalogGrid">
-        <!-- Rendered dynamically via JS -->
-    </main>
-
-    <!-- Free Fire Headshot Sensi Tool Section -->
-    <section class="tool-section">
-        <div class="tool-card">
-            <div class="tool-header">
-                <div class="tool-icon">
-                    <i class="fa-solid fa-crosshair"></i>
-                </div>
-                <div>
-                    <h2>Free Fire Headshot Sensitivity Generator</h2>
-                    <p style="color: var(--text-muted); font-size: 0.88rem;">Auto-calculate optimal sensitivity settings tuned for your device hardware.</p>
-                </div>
+    <div class="container">
+        
+        <!-- Popular Games Section -->
+        <h2 class="section-title">Popular Games <span class="view-all">View All</span></h2>
+        <div class="grid">
+            <div class="card">
+                <div class="rating">⭐ 5.0</div>
+                <div class="icon-placeholder">🔫</div>
+                <h3>Call Of Duty: Mobile</h3>
+                <button class="btn-action">Top Up</button>
             </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                <div class="form-group">
-                    <label class="form-label">Device Brand</label>
-                    <select class="form-select" id="sensiBrand" onchange="generateSensitivity()">
-                        <option value="iphone">Apple iPhone / iPad</option>
-                        <option value="samsung" selected>Samsung Galaxy</option>
-                        <option value="infinix">Infinix / Tecno / iTel</option>
-                        <option value="xiaomi">Xiaomi / Redmi / Poco</option>
-                        <option value="other">Other Android Device</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">RAM Level</label>
-                    <select class="form-select" id="sensiRam" onchange="generateSensitivity()">
-                        <option value="low">2GB - 4GB RAM</option>
-                        <option value="mid" selected>6GB - 8GB RAM</option>
-                        <option value="high">12GB+ RAM</option>
-                    </select>
-                </div>
+            <div class="card">
+                <div class="rating">⭐ 4.5</div>
+                <div class="icon-placeholder">⚽</div>
+                <h3>eFootball Coins</h3>
+                <button class="btn-action">Top Up</button>
             </div>
-
-            <div class="sensi-grid">
-                <div class="sensi-box">
-                    <div style="font-size: 0.8rem; color: var(--text-muted);">GENERAL</div>
-                    <div class="sensi-val" id="sensiGen">98</div>
-                </div>
-                <div class="sensi-box">
-                    <div style="font-size: 0.8rem; color: var(--text-muted);">RED DOT</div>
-                    <div class="sensi-val" id="sensiRed">92</div>
-                </div>
-                <div class="sensi-box">
-                    <div style="font-size: 0.8rem; color: var(--text-muted);">2X SCOPE</div>
-                    <div class="sensi-val" id="sensi2x">88</div>
-                </div>
-                <div class="sensi-box">
-                    <div style="font-size: 0.8rem; color: var(--text-muted);">4X SCOPE</div>
-                    <div class="sensi-val" id="sensi4x">85</div>
-                </div>
-                <div class="sensi-box">
-                    <div style="font-size: 0.8rem; color: var(--text-muted);">AWM SCOPE</div>
-                    <div class="sensi-val" id="sensiAwm">50</div>
-                </div>
+            <div class="card">
+                <div class="rating">⭐ 4.5</div>
+                <div class="icon-placeholder">💎</div>
+                <h3>Free Fire Diamonds</h3>
+                <button class="btn-action">Top Up</button>
+            </div>
+            <div class="card">
+                <div class="icon-placeholder">🎵</div>
+                <h3>Tiktok Coins</h3>
+                <button class="btn-action">Top Up</button>
+            </div>
+            <div class="card">
+                <div class="icon-placeholder">🌟</div>
+                <h3>Blood Strike Golds</h3>
+                <button class="btn-action">Top Up</button>
             </div>
         </div>
-    </section>
 
-    <!-- Top-Up Purchase Modal -->
-    <div class="modal-overlay" id="topupModal">
-        <div class="modal-box">
-            <button class="modal-close" onclick="closeModal('topupModal')"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-title" id="modalGameTitle">
-                <i class="fa-solid fa-cart-shopping" style="color: var(--accent-pink);"></i> Order Top-Up
+        <!-- Gadgets Section (With Exact Prices) -->
+        <h2 class="section-title">Gaming Gadgets <span class="view-all">View All</span></h2>
+        <div class="grid">
+            <div class="card">
+                <div class="icon-placeholder">❄️</div>
+                <h3>Magnetic Phone Cooler</h3>
+                <div class="price">₦19,999</div>
+                <div class="old-price">₦24,000</div>
+                <button class="btn-action">Add to cart</button>
             </div>
-
-            <!-- Dynamic Input Container -->
-            <div class="form-group">
-                <label class="form-label" id="targetInputLabel">Enter Player ID / Character ID</label>
-                <input type="text" class="form-input" id="targetInputField" placeholder="e.g. 1029384756" required>
+            <div class="card">
+                <div class="icon-placeholder">🎮</div>
+                <h3>V8 Gamepad</h3>
+                <div class="price">₦20,000</div>
+                <div class="old-price">₦24,000</div>
+                <button class="btn-action">Add to cart</button>
             </div>
-
-            <!-- Packages Selection Grid -->
-            <label class="form-label">Select Package</label>
-            <div class="pkg-grid" id="pkgGridContainer">
-                <!-- Rendered dynamically when modal opens -->
+            <div class="card">
+                <div class="icon-placeholder">🎧</div>
+                <h3>Fuxi-H3: Quad-Mode Beast</h3>
+                <div class="price">₦75,000</div>
+                <div class="old-price">₦90,000</div>
+                <button class="btn-action">Add to cart</button>
             </div>
-
-            <button class="btn-topup" onclick="proceedToPayment()">
-                <i class="fa-solid fa-credit-card"></i> Continue to Payment
-            </button>
+            <div class="card">
+                <div class="icon-placeholder">🧤</div>
+                <h3>Mobile Gaming Thumb Sleeve</h3>
+                <div class="price">₦15,000</div>
+                <div class="old-price">₦18,000</div>
+                <button class="btn-action">Add to cart</button>
+            </div>
+            <div class="card">
+                <div class="icon-placeholder">🖐️</div>
+                <h3>6-Pieces Anti-Sweat Sleeve</h3>
+                <div class="price">₦7,920</div>
+                <div class="old-price">₦9,500</div>
+                <button class="btn-action">Add to cart</button>
+            </div>
         </div>
+
+        <!-- Giftcards Section -->
+        <h2 class="section-title">Popular Giftcards <span class="view-all">View All</span></h2>
+        <div class="grid">
+            <div class="card"><div class="icon-placeholder">🍏</div><h3>iTunes Gift Card</h3><button class="btn-action">Buy Now</button></div>
+            <div class="card"><div class="icon-placeholder">🎮</div><h3>PlayStation Card</h3><button class="btn-action">Buy Now</button></div>
+            <div class="card"><div class="icon-placeholder">▶️</div><h3>Google Play</h3><button class="btn-action">Buy Now</button></div>
+            <div class="card"><div class="icon-placeholder">🎬</div><h3>Netflix</h3><button class="btn-action">Buy Now</button></div>
+            <div class="card"><div class="icon-placeholder">🚂</div><h3>Steam</h3><button class="btn-action">Buy Now</button></div>
+        </div>
+
+        <!-- Why Top Up Feature Section -->
+        <div class="features">
+            <div class="feature-box">
+                <h4>Exciting Promotions</h4>
+                <p>Stay informed and never miss out on exclusive deals and promotions for your favorite games. Our team works tirelessly to bring you the best offers.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Instant Delivery</h4>
+                <p>When you top-up on NaijaCP, your purchase is seamlessly delivered directly to your game account in a matter of moments.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Customer Supports</h4>
+                <p>Our dedicated and friendly support team is always available to provide assistance whenever you need it for a satisfying experience.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Fast and Secure</h4>
+                <p>It only takes a few seconds to complete a purchase. A streamlined and user-friendly platform designed to make your shopping quick and easy.</p>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Payment Confirmation Modal -->
-    <div class="modal-overlay" id="paymentModal">
-        <div class="modal-box">
-            <button class="modal-close" onclick="closeModal('paymentModal')"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-title">
-                <i class="fa-solid fa-receipt" style="color: var(--accent-cyan);"></i> Payment Receipt
-            </div>
-
-            <div class="receipt-box">
-                <div class="receipt-row">
-                    <span class="receipt-label">Order Ref:</span>
-                    <span class="receipt-val" id="rcpRef">#NX-9982</span>
-                </div>
-                <div class="receipt-row">
-                    <span class="receipt-label">Product:</span>
-                    <span class="receipt-val" id="rcpItem">Blood Strike Gold</span>
-                </div>
-                <div class="receipt-row">
-                    <span class="receipt-label" id="rcpTargetLabel">Target ID:</span>
-                    <span class="receipt-val" id="rcpTargetVal">1029384756</span>
-                </div>
-                <div class="receipt-row">
-                    <span class="receipt-label">Package:</span>
-                    <span class="receipt-val" id="rcpPkg">50 + 6 GOLD</span>
-                </div>
-                <div class="receipt-row">
-                    <span class="receipt-label">Total Payable:</span>
-                    <span class="receipt-val" style="color: var(--accent-pink);" id="rcpPrice">₦852.32</span>
-                </div>
-            </div>
-
-            <div style="background: rgba(255, 0, 127, 0.08); border: 1px solid rgba(255,0,127,0.2); padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 0.85rem;">
-                <p style="font-weight: 700; margin-bottom: 5px; color: var(--accent-pink);">Payment Instructions:</p>
-                <p style="color: var(--text-muted);">Please complete payment using your reference code as transfer description. Gold/Coins/Diamonds will be instantly delivered upon receipt confirmation.</p>
-            </div>
-
-            <button class="btn-topup" onclick="confirmOrderCompletion()">
-                <i class="fa-solid fa-circle-check"></i> Complete & Confirm Order
-            </button>
+    <footer>
+        <div class="logo" style="justify-content: center; font-size: 20px;">🎮 NaijaCP</div>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Terms and Conditions</a>
+            <a href="#">Privacy Policy</a>
         </div>
-    </div>
+        <p style="margin-top: 20px;">&copy; 2024 NaijaCP. All rights reserved.</p>
+    </footer>
 
-    <!-- Order Tracker Modal -->
-    <div class="modal-overlay" id="trackerModal">
-        <div class="modal-box">
-            <button class="modal-close" onclick="closeModal('trackerModal')"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-title">
-                <i class="fa-solid fa-magnifying-glass" style="color: var(--accent-pink);"></i> Order Status Tracker
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Order Reference or User ID / Username</label>
-                <input type="text" class="form-input" id="trackInput" placeholder="Enter #NX-Ref or @username">
-            </div>
-
-            <button class="btn-topup" onclick="checkOrderStatus()" style="margin-bottom: 20px;">
-                Track Status
-            </button>
-
-            <div id="trackerResult" style="display: none; background: rgba(0,0,0,0.4); border: 1px solid var(--border-glass); padding: 15px; border-radius: 10px;">
-                <!-- Output info dynamically -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Panel Modal -->
-    <div class="modal-overlay" id="adminModal">
-        <div class="modal-box" style="max-width: 750px;">
-            <button class="modal-close" onclick="closeModal('adminModal')"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-title">
-                <i class="fa-solid fa-user-shield" style="color: var(--accent-pink);"></i> Package & Catalog Manager
-            </div>
-
-            <div id="adminAuthSection">
-                <div class="form-group">
-                    <label class="form-label">Admin Passcode</label>
-                    <input type="password" class="form-input" id="adminPass" placeholder="Enter password (default: admin123)">
-                </div>
-                <button class="btn-topup" onclick="authenticateAdmin()">Login to Dashboard</button>
-            </div>
-
-            <div id="adminDashboard" style="display: none;">
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Modify existing service configurations, add/remove packages, and manage live prices.</p>
-
-                <div class="form-group">
-                    <label class="form-label">Select Service to Edit</label>
-                    <select class="form-select" id="adminGameSelect" onchange="renderAdminPackageManager()">
-                        <!-- Dynamic options -->
-                    </select>
-                </div>
-
-                <div style="max-height: 250px; overflow-y: auto; margin-bottom: 15px;">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Package Name</th>
-                                <th>Price (₦)</th>
-                                <th>Was (₦)</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminPkgTable">
-                            <!-- Rendered rows -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <div style="border-top: 1px solid var(--border-glass); padding-top: 15px; margin-top: 15px;">
-                    <h4 style="font-size: 0.95rem; margin-bottom: 10px; color: var(--accent-cyan);">Add New Package</h4>
-                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-                        <input type="text" class="form-input" id="newPkgName" placeholder="Package Title">
-                        <input type="number" class="form-input" id="newPkgPrice" placeholder="Price ₦">
-                        <input type="number" class="form-input" id="newPkgOldPrice" placeholder="Old Price ₦">
-                    </div>
-                    <button class="btn-nav" style="background: var(--accent-pink); width: 100%; justify-content: center;" onclick="addNewPackage()">
-                        <i class="fa-solid fa-plus"></i> Add Package
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <script>
-        // --- MASTER DATASET ---
-        let gamesData = [
-            {
-                id: "blood-strike",
-                name: "Blood Strike",
-                category: "Game",
-                inputType: "id",
-                inputLabel: "Enter Player ID / Character ID",
-                inputPlaceholder: "e.g. 1029384756",
-                image: "IMG_3883.png",
-                description: "Instant delivery Gold top-up for Blood Strike. Direct to account UID.",
-                packages: [
-                    { name: "50 + 6 GOLD", price: 852.32, originalPrice: 950.00 },
-                    { name: "100 + 13 GOLD", price: 1704.64, originalPrice: 1900.00 },
-                    { name: "300 + 50 GOLD", price: 5113.92, originalPrice: 5600.00 },
-                    { name: "500 + 90 GOLD", price: 8523.20, originalPrice: 9300.00 },
-                    { name: "1000 + 200 GOLD", price: 17046.40, originalPrice: 18500.00 },
-                    { name: "2000 + 486 GOLD", price: 23001.38, originalPrice: 25000.00 }
-                ]
-            },
-            {
-                id: "mobile-legends",
-                name: "Mobile Legends (MLBB)",
-                category: "Game",
-                inputType: "id",
-                inputLabel: "Enter User ID & Zone ID",
-                inputPlaceholder: "e.g. 12345678 (1234)",
-                image: "IMG_3884.png",
-                description: "Direct fast recharge Mobile Legends Diamonds with promotional bonuses.",
-                packages: [
-                    { name: "50 + 5 DIAMONDS", price: 1062.98, originalPrice: 1200.00 },
-                    { name: "100 + 10 DIAMONDS", price: 2125.96, originalPrice: 2400.00 },
-                    { name: "250 + 25 DIAMONDS", price: 5314.90, originalPrice: 5800.00 },
-                    { name: "500 + 65 DIAMONDS", price: 10629.80, originalPrice: 11500.00 },
-                    { name: "1000 + 155 DIAMONDS", price: 21259.60, originalPrice: 23000.00 },
-                    { name: "1860 DIAMONDS + 335 BONUS", price: 39316.02, originalPrice: 42000.00 }
-                ]
-            },
-            {
-                id: "tiktok",
-                name: "TikTok Coins",
-                category: "Social",
-                inputType: "username",
-                inputLabel: "Enter TikTok Username",
-                inputPlaceholder: "@yourusername",
-                image: "IMG_3885.png",
-                description: "Official TikTok Coins direct recharge. Fast delivery for gifts & streaming.",
-                packages: [
-                    { name: "350 TIKTOK COINS", price: 8500.00, originalPrice: 9350.00 },
-                    { name: "700 TIKTOK COINS", price: 17500.00, originalPrice: 19250.00 },
-                    { name: "1500 TIKTOK COINS", price: 35000.00, originalPrice: 38500.00 },
-                    { name: "3500 TIKTOK COINS", price: 72500.00, originalPrice: 79750.00 },
-                    { name: "7000 TIKTOK COINS", price: 151500.00, originalPrice: 166650.00 },
-                    { name: "17500 TIKTOK COINS", price: 340000.00, originalPrice: 374000.00 }
-                ]
-            }
-        ];
-
-        let activeGame = null;
-        let selectedPackageIndex = null;
-
-        // --- RENDER CATALOG ---
-        function renderCatalog(filter = 'all') {
-            const grid = document.getElementById('catalogGrid');
-            grid.innerHTML = '';
-
-            const items = filter === 'all' 
-                ? gamesData 
-                : gamesData.filter(g => g.category.toLowerCase() === filter.toLowerCase());
-
-            items.forEach(game => {
-                const card = document.createElement('div');
-                card.className = 'game-card';
-                card.innerHTML = `
-                    <img src="${game.image}" alt="${game.name}" class="card-banner" onerror="this.src='https://via.placeholder.com/400x200/12121c/ff007f?text=${encodeURIComponent(game.name)}'">
-                    <div class="card-body">
-                        <span class="card-tag">${game.category}</span>
-                        <div class="card-title">${game.name}</div>
-                        <div class="card-desc">${game.description}</div>
-                        <button class="btn-topup" onclick="openTopUpModal('${game.id}')">
-                            <i class="fa-solid fa-bolt"></i> Order Top-Up
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function filterCatalog(category, btnElem) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            btnElem.classList.add('active');
-            renderCatalog(category);
-        }
-
-        // --- TOP-UP MODAL & LOGIC ---
-        function openTopUpModal(gameId) {
-            activeGame = gamesData.find(g => g.id === gameId);
-            if (!activeGame) return;
-
-            selectedPackageIndex = null;
-            document.getElementById('modalGameTitle').innerHTML = `<i class="fa-solid fa-cart-shopping" style="color: var(--accent-pink);"></i> ${activeGame.name}`;
-            
-            // Dynamic Label & Placeholder updates based on Input Type
-            const labelElem = document.getElementById('targetInputLabel');
-            const inputElem = document.getElementById('targetInputField');
-            
-            labelElem.innerText = activeGame.inputLabel;
-            inputElem.placeholder = activeGame.inputPlaceholder;
-            inputElem.value = '';
-
-            // Render Package Selection Items
-            const pkgContainer = document.getElementById('pkgGridContainer');
-            pkgContainer.innerHTML = '';
-
-            activeGame.packages.forEach((pkg, index) => {
-                const pkgBox = document.createElement('div');
-                pkgBox.className = 'pkg-item';
-                pkgBox.onclick = () => selectPackage(index, pkgBox);
-                pkgBox.innerHTML = `
-                    <div class="pkg-name">${pkg.name}</div>
-                    <div class="pkg-price">
-                        ₦${pkg.price.toLocaleString('en-US', {minimumFractionDigits: 2})}
-                        ${pkg.originalPrice ? `<span class="pkg-old-price">₦${pkg.originalPrice.toLocaleString()}</span>` : ''}
-                    </div>
-                `;
-                pkgContainer.appendChild(pkgBox);
-            });
-
-            openModal('topupModal');
-        }
-
-        function selectPackage(index, elem) {
-            document.querySelectorAll('.pkg-item').forEach(el => el.classList.remove('selected'));
-            elem.classList.add('selected');
-            selectedPackageIndex = index;
-        }
-
-        function proceedToPayment() {
-            const inputVal = document.getElementById('targetInputField').value.trim();
-            if (!inputVal) {
-                alert(`Please provide a valid ${activeGame.inputLabel}`);
-                return;
-            }
-            if (selectedPackageIndex === null) {
-                alert('Please select a top-up package to continue.');
-                return;
-            }
-
-            const chosenPkg = activeGame.packages[selectedPackageIndex];
-            const refCode = '#NX-' + Math.floor(100000 + Math.random() * 900000);
-
-            // Populate Receipt Modal
-            document.getElementById('rcpRef').innerText = refCode;
-            document.getElementById('rcpItem').innerText = activeGame.name;
-            document.getElementById('rcpTargetLabel').innerText = activeGame.inputType === 'username' ? 'TikTok Username:' : 'Target ID:';
-            document.getElementById('rcpTargetVal').innerText = inputVal;
-            document.getElementById('rcpPkg').innerText = chosenPkg.name;
-            document.getElementById('rcpPrice').innerText = '₦' + chosenPkg.price.toLocaleString('en-US', {minimumFractionDigits: 2});
-
-            closeModal('topupModal');
-            openModal('paymentModal');
-        }
-
-        function confirmOrderCompletion() {
-            alert('Your order payment was registered successfully! Top-up processing initialized.');
-            closeModal('paymentModal');
-        }
-
-        // --- ORDER TRACKER ---
-        function checkOrderStatus() {
-            const query = document.getElementById('trackInput').value.trim();
-            const resBox = document.getElementById('trackerResult');
-
-            if (!query) {
-                alert('Please enter an order reference or username/ID.');
-                return;
-            }
-
-            resBox.style.display = 'block';
-            resBox.innerHTML = `
-                <div style="color: var(--accent-cyan); font-weight: 700; margin-bottom: 5px;">
-                    <i class="fa-solid fa-circle-check"></i> Status: INSTANT DELIVERY COMPLETED
-                </div>
-                <div style="font-size: 0.85rem; color: var(--text-muted);">
-                    Query: <b>${query}</b><br>
-                    Automated system response: All credits dispatched successfully.
-                </div>
-            `;
-        }
-
-        // --- FREE FIRE SENSI GENERATOR ---
-        function generateSensitivity() {
-            const brand = document.getElementById('sensiBrand').value;
-            const ram = document.getElementById('sensiRam').value;
-
-            let baseGen = 95;
-            let baseRed = 90;
-            let base2x = 85;
-            let base4x = 80;
-            let baseAwm = 50;
-
-            if (brand === 'iphone') {
-                baseGen = 98; baseRed = 95; base2x = 90;
-            } else if (brand === 'infinix') {
-                baseGen = 100; baseRed = 98; base2x = 94;
-            }
-
-            if (ram === 'low') {
-                baseGen = Math.min(100, baseGen + 3);
-            } else if (ram === 'high') {
-                baseGen -= 4;
-            }
-
-            document.getElementById('sensiGen').innerText = baseGen;
-            document.getElementById('sensiRed').innerText = baseRed;
-            document.getElementById('sensi2x').innerText = base2x;
-            document.getElementById('sensi4x').innerText = base4x;
-            document.getElementById('sensiAwm').innerText = baseAwm;
-        }
-
-        // --- ADMIN PANEL MANAGEMENT ---
-        function openAdminPanel() {
-            document.getElementById('adminAuthSection').style.display = 'block';
-            document.getElementById('adminDashboard').style.display = 'none';
-            document.getElementById('adminPass').value = '';
-            openModal('adminModal');
-        }
-
-        function authenticateAdmin() {
-            const pass = document.getElementById('adminPass').value;
-            if (pass === 'admin123' || pass === 'admin') {
-                document.getElementById('adminAuthSection').style.display = 'none';
-                document.getElementById('adminDashboard').style.display = 'block';
-                populateAdminGameSelect();
-            } else {
-                alert('Invalid admin passcode.');
-            }
-        }
-
-        function populateAdminGameSelect() {
-            const select = document.getElementById('adminGameSelect');
-            select.innerHTML = '';
-            gamesData.forEach(game => {
-                const opt = document.createElement('option');
-                opt.value = game.id;
-                opt.innerText = game.name;
-                select.appendChild(opt);
-            });
-            renderAdminPackageManager();
-        }
-
-        function renderAdminPackageManager() {
-            const gameId = document.getElementById('adminGameSelect').value;
-            const game = gamesData.find(g => g.id === gameId);
-            const tbody = document.getElementById('adminPkgTable');
-            tbody.innerHTML = '';
-
-            if (!game) return;
-
-            game.packages.forEach((pkg, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><b>${pkg.name}</b></td>
-                    <td>₦${pkg.price.toLocaleString()}</td>
-                    <td>₦${pkg.originalPrice ? pkg.originalPrice.toLocaleString() : '-'}</td>
-                    <td>
-                        <button class="btn-sm btn-danger" onclick="deletePackage('${game.id}', ${index})"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function addNewPackage() {
-            const gameId = document.getElementById('adminGameSelect').value;
-            const game = gamesData.find(g => g.id === gameId);
-            
-            const name = document.getElementById('newPkgName').value.trim();
-            const price = parseFloat(document.getElementById('newPkgPrice').value);
-            const oldPrice = parseFloat(document.getElementById('newPkgOldPrice').value) || null;
-
-            if (!name || isNaN(price)) {
-                alert('Please enter a valid package title and price.');
-                return;
-            }
-
-            game.packages.push({ name: name, price: price, originalPrice: oldPrice });
-            
-            document.getElementById('newPkgName').value = '';
-            document.getElementById('newPkgPrice').value = '';
-            document.getElementById('newPkgOldPrice').value = '';
-
-            renderAdminPackageManager();
-            renderCatalog();
-            alert('New package added successfully!');
-        }
-
-        function deletePackage(gameId, index) {
-            const game = gamesData.find(g => g.id === gameId);
-            if (!game) return;
-            game.packages.splice(index, 1);
-            renderAdminPackageManager();
-            renderCatalog();
-        }
-
-        // --- GENERAL MODAL UTILS ---
-        function openModal(id) {
-            document.getElementById(id).classList.add('active');
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('active');
-        }
-
-        // Live Counter Fluctuation Simulation
-        setInterval(() => {
-            const elem = document.getElementById('activeUsersCount');
-            if (elem) {
-                let current = parseInt(elem.innerText);
-                let change = Math.floor(Math.random() * 5) - 2;
-                let updated = Math.max(120, Math.min(240, current + change));
-                elem.innerText = updated;
-            }
-        }, 4000);
-
-        // INITIALIZE ON LOAD
-        window.addEventListener('DOMContentLoaded', () => {
-            renderCatalog();
-            generateSensitivity();
-        });
-    </script>
 </body>
 </html>
