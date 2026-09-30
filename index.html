@@ -1,802 +1,630 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAIJACP.NG | Africa's Top Gaming Marketplace & Digital Top-Up Services</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game & Social Top-Up Store</title>
+  <style>
+    :root {
+      --bg-color: #0b0c10;
+      --card-bg: #151821;
+      --card-border: #232736;
+      --accent-color: #e52b71;
+      --accent-hover: #ff3a83;
+      --text-main: #ffffff;
+      --text-sub: #9ea3b5;
+      --input-bg: #1d212f;
+    }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #060508;
-            color: #f3f4f6;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
 
-        ::-webkit-scrollbar { width: 7px; }
-        ::-webkit-scrollbar-track { background: #060508; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 20px 12px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
 
-        .glass-card {
-            background: rgba(18, 12, 21, 0.75);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(236, 72, 153, 0.15);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .glass-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(236, 72, 153, 0.5);
-            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.35);
-        }
+    header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
 
-        .glass-modal {
-            background: rgba(12, 10, 16, 0.96);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(236, 72, 153, 0.3);
-        }
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
 
-        .pulse-dot {
-            box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
-            animation: pulse 1.8s infinite;
-        }
+    header p {
+      color: var(--text-sub);
+      font-size: 0.9rem;
+    }
 
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(236, 72, 153, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
-        }
+    /* Category Filter Navigation */
+    .filter-container {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--card-border) transparent;
+    }
 
-        @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-            display: flex;
-            width: 200%;
-            animation: marquee 22s linear infinite;
-        }
+    .filter-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
 
-        @keyframes slideInUp {
-            from { transform: translateY(120%) scale(0.9); opacity: 0; }
-            to { transform: translateY(0) scale(1); opacity: 1; }
-        }
-        @keyframes fadeOutDown {
-            from { transform: translateY(0) scale(1); opacity: 1; }
-            to { transform: translateY(120%) scale(0.9); opacity: 0; }
-        }
-        .toast-enter { animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .toast-exit { animation: fadeOutDown 0.4s cubic-bezier(0.7, 0, 0.84, 0) forwards; }
-        
-        .active-btn {
-            background-color: #ec4899 !important;
-            color: #000 !important;
-            border-color: #ec4899 !important;
-            box-shadow: 0 10px 15px -3px rgba(236, 72, 153, 0.3) !important;
-        }
-    </style>
+    .filter-btn.active {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      box-shadow: 0 0 15px rgba(229, 43, 113, 0.4);
+    }
+
+    .filter-btn:hover:not(.active) {
+      border-color: var(--accent-color);
+    }
+
+    /* Game Selection Grid */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .game-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .game-card:hover, .game-card.selected {
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(229, 43, 113, 0.15);
+    }
+
+    .game-icon {
+      width: 48px;
+      height: 48px;
+      background: #202433;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .game-info h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .game-info span {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+    }
+
+    /* Top-Up Section */
+    .store-section {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 30px;
+      display: none;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Form Step Inputs */
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-bottom: 8px;
+    }
+
+    .input-group input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus {
+      border-color: var(--accent-color);
+    }
+
+    /* Packages Grid */
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .package-card {
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .package-card:hover, .package-card.active {
+      border-color: var(--accent-color);
+      background: #232738;
+    }
+
+    .package-card.active {
+      box-shadow: 0 0 10px rgba(229, 43, 113, 0.25);
+    }
+
+    .package-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .package-price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    /* Checkout Bar */
+    .checkout-btn {
+      width: 100%;
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.2s ease;
+    }
+
+    .checkout-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .order-summary {
+      background: var(--input-bg);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 18px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+
+    .summary-row:last-child {
+      margin-bottom: 0;
+      padding-top: 8px;
+      border-top: 1px dashed var(--card-border);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .whatsapp-btn {
+      width: 100%;
+      background: #25d366;
+      border: none;
+      color: white;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .whatsapp-btn:hover {
+      background: #20bd5a;
+    }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black">
+<body>
 
-    <!-- Top Promo Banner -->
-    <div class="bg-gradient-to-r from-pink-950 via-black to-pink-950 border-b border-pink-500/20 py-2 text-xs text-slate-300 overflow-hidden relative z-50">
-        <div class="animate-marquee whitespace-nowrap flex items-center space-x-8">
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> INSTANT GAME TOP-UP & DIGITAL SERVICES IN NIGERIA 🇳🇬</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-shield-halved text-pink-400"></i> SECURE BANK TRANSFERS & INSTANT CREDIT</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-crosshair text-pink-400"></i> FREE FIRE HEADSHOT SENSI GENERATOR</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> FAST AUTOMATED DELIVERY 24/7 IN NIGERIA 🇳🇬</span>
-        </div>
+  <header>
+    <h1>Instant Top-Up Store</h1>
+    <p>Select your game or app to instantly purchase credits</p>
+  </header>
+
+  <!-- Category Filter Buttons -->
+  <div class="filter-container">
+    <button class="filter-btn active" onclick="filterCategory('All', this)">All Games</button>
+    <button class="filter-btn" onclick="filterCategory('Call of Duty (CODM)', this)">Call of Duty (CODM)</button>
+    <button class="filter-btn" onclick="filterCategory('eFootball PES', this)">eFootball PES</button>
+    <button class="filter-btn" onclick="filterCategory('Free Fire', this)">Free Fire</button>
+    <button class="filter-btn" onclick="filterCategory('Blood Strike', this)">Blood Strike</button>
+    <button class="filter-btn" onclick="filterCategory('TikTok Coins', this)">TikTok Coins</button>
+    <button class="filter-btn" onclick="filterCategory('Dream League (DLS)', this)">Dream League (DLS)</button>
+    <button class="filter-btn" onclick="filterCategory('OneState RP', this)">OneState RP</button>
+  </div>
+
+  <!-- Game Category Grid -->
+  <div class="games-grid" id="gamesGrid"></div>
+
+  <!-- Package Selection Section -->
+  <div class="store-section" id="packageSection">
+    <div class="section-title">
+      <span id="selectedGameIcon"></span>
+      <span id="selectedGameName"></span> Packages
     </div>
 
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-pink-900/30 px-4 sm:px-8 py-3.5">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-2.5 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                <div class="w-10 h-10 rounded-xl bg-pink-500 flex items-center justify-center font-black text-black text-xl shadow-lg shadow-pink-500/40">N</div>
-                <span class="text-xl sm:text-2xl font-black tracking-tight text-white">NAIJACP<span class="text-pink-500">.NG</span></span>
-            </div>
-
-            <nav class="hidden md:flex items-center gap-6">
-                <a onclick="switchMainCategory('games')" id="nav-games" class="text-sm font-bold text-pink-400 cursor-pointer transition hover:text-pink-300">Games</a>
-                <a onclick="switchMainCategory('gadgets')" id="nav-gadgets" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Gadgets</a>
-                <a onclick="switchMainCategory('giftcards')" id="nav-giftcards" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Gift Cards</a>
-                <a onclick="scrollToSensi()" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Free FF Sensi</a>
-            </nav>
-
-            <button class="px-4 py-2 rounded-xl bg-slate-900 border border-pink-500/30 text-pink-400 font-bold text-xs hover:bg-pink-500 hover:text-black transition" onclick="openModal('adminAuthModal')">
-                <i class="fa-solid fa-lock mr-1"></i> Admin Login
-            </button>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <div class="relative pt-12 pb-16 overflow-hidden px-4 sm:px-6 text-center border-b border-pink-500/20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-pink-950/20 via-black to-black">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-slate-300 mb-6">
-            <span class="w-2.5 h-2.5 rounded-full bg-pink-500 pulse-dot"></span>
-            <span id="liveUserCounter" class="text-pink-400 font-extrabold text-sm">8,492</span>
-            <span>Gamers Online Right Now</span>
-        </div>
-        <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 tracking-tight">Top Up Your Favorite Games Fast</h1>
-        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid directly via Nigerian Bank Transfer.</p>
+    <div class="input-group">
+      <label id="userIdLabel" for="playerUserId">Player User ID / Account Tag</label>
+      <input type="text" id="playerUserId" placeholder="Enter your ID here..." />
     </div>
 
-    <!-- Main Container -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+    <div class="packages-grid" id="packagesGrid"></div>
 
-        <!-- MAIN CATEGORY NAVIGATION BUTTONS -->
-        <div class="flex flex-wrap items-center gap-3 mb-8 justify-center sm:justify-start">
-            <button class="btn-cat active-btn px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-games" onclick="switchMainCategory('games')">🎮 All Game Packages</button>
-            <button class="btn-cat px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-gadgets" onclick="switchMainCategory('gadgets')">🎧 Gaming Gear & Gadgets</button>
-            <button class="btn-cat px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-giftcards" onclick="switchMainCategory('giftcards')">💳 Gift Cards & Subs</button>
+    <button class="checkout-btn" onclick="openCheckoutModal()">Proceed to Checkout</button>
+  </div>
+
+  <!-- Modal / Checkout View -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Confirm Order</h3>
+        <button class="modal-close" onclick="closeCheckoutModal()">&times;</button>
+      </div>
+
+      <div class="order-summary">
+        <div class="summary-row">
+          <span>Game:</span>
+          <span id="modalGame">--</span>
         </div>
-
-        <!-- GAME SUB-FILTER BUTTONS -->
-        <div id="gameSubFilters" class="flex flex-wrap gap-2 mb-8 bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
-            <button class="btn-subfilter active-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('all', this)">All Games</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('codm', this)">Call of Duty (CODM)</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('efootball', this)">eFootball PES</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('freefire', this)">Free Fire</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('bloodstrike', this)">Blood Strike</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('tiktok', this)">TikTok Coins</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('dls', this)">Dream League (DLS)</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('onestate', this)">OneState RP</button>
+        <div class="summary-row">
+          <span>Account ID:</span>
+          <span id="modalId">--</span>
         </div>
-
-        <!-- PRODUCTS GRID -->
-        <section id="catalogSection" class="mb-16">
-            <div class="flex items-center gap-3 mb-6">
-                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-pink-500 pl-4" id="sectionHeading">
-                    🎮 Game Top-Up Packages
-                </h2>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid">
-                <!-- Loaded Dynamically -->
-            </div>
-        </section>
-
-        <!-- FREE FIRE SENSITIVITY GENERATOR TOOL -->
-        <section id="sensitivity" class="py-12 border-t border-pink-500/20">
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase mb-3">
-                    <i class="fa-solid fa-crosshair"></i> 100% Free Tool
-                </div>
-                <h2 class="text-3xl font-extrabold text-white">Free Fire Auto-Headshot Sensi</h2>
-                <p class="text-slate-400 text-sm mt-2">Share to 5 WhatsApp groups to unlock your custom optimal sensitivity settings.</p>
-            </div>
-
-            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-2xl mx-auto shadow-2xl relative">
-                
-                <!-- Share Lock Container -->
-                <div id="sensiUnlockArea" class="space-y-5">
-                    <div class="p-4 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-between text-xs">
-                        <span class="text-slate-300 font-bold">Step 1: Complete Share Requirement</span>
-                        <span id="taskProgressText" class="text-pink-400 font-black text-sm">0/5 Shares</span>
-                    </div>
-
-                    <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-800">
-                        <div id="progressBar" class="bg-pink-500 h-full w-0 transition-all duration-300"></div>
-                    </div>
-
-                    <button onclick="shareToWhatsApp()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20">
-                        <i class="fa-brands fa-whatsapp text-xl"></i>
-                        <span>Share to WhatsApp Group (<span id="sharesLeft">5</span> Left)</span>
-                    </button>
-                </div>
-
-                <!-- Actual Form Container -->
-                <div id="sensiFormArea" class="hidden">
-                    <div class="p-3.5 mb-6 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs text-center font-bold">
-                        <i class="fa-solid fa-circle-check text-green-400 mr-1"></i> Shared successfully! Generate your settings below.
-                    </div>
-                    
-                    <form id="sensiForm" onsubmit="generateSensi(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Phone Brand / Model</label>
-                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">RAM Size</label>
-                            <select id="ramSize" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
-                                <option value="2">2 GB RAM</option>
-                                <option value="3">3 GB RAM</option>
-                                <option value="4" selected>4 GB RAM</option>
-                                <option value="6">6 GB RAM</option>
-                                <option value="8">8 GB RAM or Higher</option>
-                            </select>
-                        </div>
-                        <div class="md:col-span-2 mt-2">
-                            <button type="submit" class="w-full py-4 rounded-2xl bg-pink-500 hover:bg-pink-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-pink-500/20">
-                                Generate Best Settings ⚡
-                            </button>
-                        </div>
-                    </form>
-
-                    <div id="sensiResults" class="hidden mt-6 pt-6 border-t border-slate-800 grid grid-cols-2 md:grid-cols-4 gap-3">
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">General</span>
-                            <span class="text-xl font-black text-green-400" id="valGen">98</span>
-                        </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Red Dot</span>
-                            <span class="text-xl font-black text-green-400" id="valRed">95</span>
-                        </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">2X Scope</span>
-                            <span class="text-xl font-black text-green-400" id="val2x">90</span>
-                        </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">4X Scope</span>
-                            <span class="text-xl font-black text-green-400" id="val4x">85</span>
-                        </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">AWM Scope</span>
-                            <span class="text-xl font-black text-green-400" id="valAwm">60</span>
-                        </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Fire Button</span>
-                            <span class="text-xl font-black text-green-400" id="valBtn">48%</span>
-                        </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center col-span-2">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Recommended DPI</span>
-                            <span class="text-xl font-black text-green-400" id="valDpi">Default</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-    </div>
-
-    <footer class="border-t border-slate-800 bg-black py-8 text-slate-500 text-xs text-center mt-auto">
-        <p>&copy; 2026 NaijaCP Marketplace. All Rights Reserved.</p>
-        <p class="mt-2 text-[11px]">Bank Payment Provider: MOMO PSB | Account Number: 7048972368 (OGUNLANA JAMIU)</p>
-    </footer>
-
-    <!-- Toast Notifications Container -->
-    <div id="liveToastContainer" class="fixed bottom-5 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
-
-    <!-- MODALS -->
-
-    <!-- CHECKOUT & PAYMENT MODAL -->
-    <div id="checkoutModal" class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-        <div class="glass-modal w-full max-w-lg rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[95vh] overflow-y-auto">
-            <button onclick="closeModal('checkoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            
-            <h3 class="text-xl font-black text-white mb-1">Complete Your Order</h3>
-            <p class="text-slate-400 text-xs mb-2" id="checkoutItemTitle">Item: Loading...</p>
-            <p class="text-pink-400 text-2xl font-black mb-4" id="checkoutItemPrice">₦0</p>
-
-            <!-- Bank Details -->
-            <div class="bg-black border border-pink-500/30 p-4 rounded-2xl mb-5 space-y-2.5">
-                <h4 class="text-pink-400 text-sm font-bold mb-2">🏦 Official Bank Payment Details</h4>
-                <div class="flex justify-between text-xs text-slate-300 border-b border-slate-800 pb-2">
-                    <span>Bank Name:</span><span class="font-bold text-white">MOMO PSB</span>
-                </div>
-                <div>
-                    <span class="text-xs text-slate-300 block mb-1">Account Number:</span>
-                    <div class="flex items-center justify-between bg-slate-900 p-2.5 rounded-xl border border-slate-800">
-                        <span class="text-lg font-mono font-extrabold text-pink-400">7048972368</span>
-                        <button type="button" onclick="copyAccountNumber()" class="bg-pink-500/20 text-pink-400 hover:bg-pink-500 hover:text-black px-3 py-1 rounded-lg text-xs font-bold transition">Copy</button>
-                    </div>
-                </div>
-                <div class="flex justify-between text-xs text-slate-300 pt-1">
-                    <span>Account Name:</span><span class="font-bold text-white">OGUNLANA JAMIU</span>
-                </div>
-                <p class="text-[10px] text-slate-500 mt-2">📌 Transfer the total amount to the bank account above, then attach your screenshot receipt below.</p>
-            </div>
-
-            <!-- Checkout Form -->
-            <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Your Full Name / Gamer Tag</label>
-                    <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. John Doe" required>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Player ID / Account ID</label>
-                    <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 6823019283" required>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">WhatsApp Phone Number</label>
-                    <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 08012345678" required>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Upload Payment Screenshot 🧾</label>
-                    <div class="border-2 border-dashed border-pink-500/40 hover:border-pink-500 bg-slate-950 rounded-2xl p-4 text-center cursor-pointer transition" onclick="document.getElementById('receiptFile').click()">
-                        <input type="file" id="receiptFile" accept="image/*" class="hidden" onchange="handleFileSelect(event)" required>
-                        <div id="fileLabel" class="text-xs text-white font-semibold flex flex-col items-center gap-2">
-                            <i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i>
-                            Click to choose receipt screenshot image
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition">
-                    Submit Order & Payment 🚀
-                </button>
-            </form>
+        <div class="summary-row">
+          <span>Package:</span>
+          <span id="modalPackage">--</span>
         </div>
-    </div>
-
-    <!-- ADMIN AUTHENTICATION MODAL -->
-    <div id="adminAuthModal" class="fixed inset-0 z-[70] hidden flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
-        <div class="glass-modal w-full max-w-sm rounded-3xl p-6 text-center border border-pink-500/40 relative">
-            <button onclick="closeModal('adminAuthModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="w-12 h-12 rounded-2xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center mx-auto mb-3 text-xl">
-                <i class="fa-solid fa-user-shield"></i>
-            </div>
-            <h3 class="text-lg font-extrabold text-white mb-4">Admin Verification</h3>
-            
-            <form onsubmit="handleAdminLogin(event)" class="space-y-3">
-                <input type="text" id="adminUser" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-pink-500" placeholder="Username" required>
-                <input type="password" id="adminPass" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-pink-500" placeholder="Password" required>
-                <button type="submit" class="w-full py-3 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-extrabold text-sm transition">
-                    Login to Dashboard
-                </button>
-            </form>
+        <div class="summary-row">
+          <span>Total Price:</span>
+          <span id="modalPrice">₦0.00</span>
         </div>
+      </div>
+
+      <button class="whatsapp-btn" onclick="completeOrderViaWhatsApp()">
+        <span>Complete Order via WhatsApp</span>
+      </button>
     </div>
+  </div>
 
-    <!-- ADMIN DASHBOARD MODAL -->
-    <div id="adminModal" class="fixed inset-0 z-[80] hidden flex items-center justify-center p-2 sm:p-4 bg-black/95 backdrop-blur-md">
-        <div class="glass-modal w-full max-w-5xl h-[92vh] rounded-3xl p-4 sm:p-6 relative shadow-2xl border border-pink-500/40 flex flex-col">
-            <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
-                <h3 class="text-xl font-black text-white flex items-center gap-2">
-                    <i class="fa-solid fa-gears text-pink-400"></i> Admin Control Panel
-                </h3>
-                <button onclick="closeModal('adminModal')" class="text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+  <script>
+    // Database containing all 7 games and their updated prices
+    const storeData = [
+      {
+        id: "freefire",
+        name: "Free Fire",
+        category: "Free Fire",
+        icon: "🔥",
+        idLabel: "Free Fire Player ID",
+        packages: [
+          { name: "Weekly Membership", price: "₦3,135" },
+          { name: "Monthly Membership", price: "₦14,633" },
+          { name: "Booyah Pass (Elite Pass)", price: "₦3,750" },
+          { name: "Booyah Pass Premium Bundle", price: "₦7,500" },
+          { name: "100 Diamonds", price: "₦1,575.08" },
+          { name: "100 + 10 Diamonds", price: "₦1,580.64" },
+          { name: "210 Diamonds", price: "₦3,150.15" },
+          { name: "210 + 21 Diamonds", price: "₦3,161.28" },
+          { name: "310 Diamonds", price: "₦4,725.23" },
+          { name: "520 Diamonds", price: "₦7,875.39" },
+          { name: "530 + 53 Diamonds", price: "₦7,942.48" },
+          { name: "1,060 Diamonds", price: "₦15,750.77" },
+          { name: "1,080 + 108 Diamonds", price: "₦15,884.95" },
+          { name: "2,180 Diamonds", price: "₦31,501.54" },
+          { name: "2,200 + 220 Diamonds", price: "₦31,612.79" }
+        ]
+      },
+      {
+        id: "tiktok",
+        name: "TikTok Coins",
+        category: "TikTok Coins",
+        icon: "🎵",
+        idLabel: "TikTok Username (@username)",
+        packages: [
+          { name: "350 TikTok Coins", price: "₦8,500.00" },
+          { name: "700 TikTok Coins", price: "₦17,500.00" },
+          { name: "1,500 TikTok Coins", price: "₦35,000.00" },
+          { name: "3,500 TikTok Coins", price: "₦72,500.00" },
+          { name: "7,000 TikTok Coins", price: "₦151,500.00" },
+          { name: "17,500 TikTok Coins", price: "₦340,000.00" }
+        ]
+      },
+      {
+        id: "codm",
+        name: "Call of Duty (CODM)",
+        category: "Call of Duty (CODM)",
+        icon: "🔫",
+        idLabel: "CODM OpenID / Player ID",
+        packages: [
+          { name: "80 CP", price: "₦1,650" },
+          { name: "420 CP", price: "₦7,425" },
+          { name: "880 CP", price: "₦14,850" },
+          { name: "2,400 CP", price: "₦37,125" },
+          { name: "5,000 CP", price: "₦74,250" },
+          { name: "Battle Pass (Direct)", price: "₦7,400" }
+        ]
+      },
+      {
+        id: "efootball",
+        name: "eFootball PES",
+        category: "eFootball PES",
+        icon: "⚽",
+        idLabel: "Konami ID / User ID",
+        packages: [
+          { name: "100 eFootball Coins", price: "₦1,600" },
+          { name: "300 eFootball Coins", price: "₦4,400" },
+          { name: "550 eFootball Coins", price: "₦9,500" },
+          { name: "1,040 eFootball Coins", price: "₦14,000" },
+          { name: "2,130 eFootball Coins", price: "₦28,500" },
+          { name: "3,250 eFootball Coins", price: "₦41,000" }
+        ]
+      },
+      {
+        id: "bloodstrike",
+        name: "Blood Strike",
+        category: "Blood Strike",
+        icon: "🩸",
+        idLabel: "Blood Strike User ID",
+        packages: [
+          { name: "100 + 5 Gold", price: "₦1,374" },
+          { name: "300 + 20 Gold", price: "₦4,148" },
+          { name: "500 + 40 Gold", price: "₦6,922" },
+          { name: "1,000 + 100 Gold", price: "₦13,857" },
+          { name: "Strike Pass Elite", price: "₦4,607" },
+          { name: "Strike Pass Premium", price: "₦12,247" }
+        ]
+      },
+      {
+        id: "onestate",
+        name: "OneState RP",
+        category: "OneState RP",
+        icon: "🏙️",
+        idLabel: "OneState Player ID",
+        packages: [
+          { name: "100 State Coins", price: "₦3,800" },
+          { name: "300 State Coins", price: "₦8,000" },
+          { name: "500 State Coins", price: "₦16,000" }
+        ]
+      },
+      {
+        id: "dls",
+        name: "Dream League (DLS)",
+        category: "Dream League (DLS)",
+        icon: "🏟️",
+        idLabel: "DLS Manager ID",
+        packages: [
+          { name: "Small Coin Pack", price: "₦3,500" },
+          { name: "Medium Coin Pack", price: "₦8,000" },
+          { name: "Season Pass / Premium", price: "₦4,500" }
+        ]
+      }
+    ];
+
+    let currentGame = null;
+    let currentPackage = null;
+    const YOUR_WHATSAPP_NUMBER = "2340000000000"; // Replace with your actual WhatsApp number
+
+    // Render Games Grid
+    function renderGames(filterCategory = 'All') {
+      const grid = document.getElementById('gamesGrid');
+      grid.innerHTML = '';
+
+      storeData.forEach(game => {
+        if (filterCategory === 'All' || game.category === filterCategory) {
+          const card = document.createElement('div');
+          card.className = `game-card ${currentGame && currentGame.id === game.id ? 'selected' : ''}`;
+          card.onclick = () => selectGame(game.id);
+          card.innerHTML = `
+            <div class="game-icon">${game.icon}</div>
+            <div class="game-info">
+              <h3>${game.name}</h3>
+              <span>Instant Top-Up</span>
             </div>
-            
-            <div class="flex gap-2 overflow-x-auto pb-2 mb-4 border-b border-slate-800 flex-shrink-0 hide-scroll">
-                <button class="admin-tab-btn active-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 whitespace-nowrap transition" onclick="switchAdminTab('orders', this)">Receipts & Orders</button>
-                <button class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 whitespace-nowrap transition" onclick="switchAdminTab('packages', this)">Manage Packages</button>
-                <button class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-green-400 border border-slate-800 whitespace-nowrap hover:bg-green-500/20 transition" onclick="exportUpdatedCode()">📥 Export Source Data</button>
-            </div>
-
-            <!-- TAB 1: ORDERS -->
-            <div id="adminTabOrders" class="flex-1 overflow-y-auto pr-2">
-                <h4 class="text-sm font-bold text-white mb-3">Submitted Customer Receipts</h4>
-                <div class="overflow-x-auto bg-slate-950 rounded-xl border border-slate-800">
-                    <table class="w-full text-left text-xs whitespace-nowrap">
-                        <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
-                            <tr>
-                                <th class="p-3">Date</th>
-                                <th class="p-3">Customer</th>
-                                <th class="p-3">Game ID / Phone</th>
-                                <th class="p-3">Product</th>
-                                <th class="p-3">Amount</th>
-                                <th class="p-3">Screenshot</th>
-                                <th class="p-3">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ordersTableBody" class="text-slate-300 divide-y divide-slate-800">
-                            <tr><td colspan="7" class="p-4 text-center">No orders submitted yet.</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- TAB 2: PACKAGES -->
-            <div id="adminTabPackages" class="hidden flex-1 overflow-y-auto pr-2">
-                <h4 class="text-sm font-bold text-white mb-3">Add / Edit Product Tiers</h4>
-                <form id="pkgForm" onsubmit="savePackage(event)" class="bg-slate-900 p-4 rounded-xl border border-slate-800 mb-6 space-y-3">
-                    <input type="hidden" id="pkgId">
-                    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-                        <input type="text" id="pkgTitle" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs col-span-2 md:col-span-1" placeholder="Title (e.g. 880 CODM CP)" required>
-                        <input type="number" id="pkgPrice" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs" placeholder="Price (₦)" required>
-                        <select id="pkgCategory" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs">
-                            <option value="games">Game Top-Up</option>
-                            <option value="gadgets">Gadgets</option>
-                            <option value="giftcards">Gift Cards</option>
-                        </select>
-                        <select id="pkgSubTag" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs">
-                            <option value="codm">CODM</option>
-                            <option value="efootball">eFootball</option>
-                            <option value="freefire">Free Fire</option>
-                            <option value="bloodstrike">Blood Strike</option>
-                            <option value="tiktok">TikTok</option>
-                            <option value="dls">DLS</option>
-                            <option value="onestate">OneState RP</option>
-                            <option value="general">General / Other</option>
-                        </select>
-                        <input type="text" id="pkgIcon" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs" placeholder="Icon (e.g. 🔫)">
-                    </div>
-                    <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-400 text-black text-xs font-bold rounded-lg transition">Save Package</button>
-                </form>
-
-                <div class="overflow-x-auto bg-slate-950 rounded-xl border border-slate-800">
-                    <table class="w-full text-left text-xs whitespace-nowrap">
-                        <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
-                            <tr>
-                                <th class="p-3">Icon</th>
-                                <th class="p-3">Title</th>
-                                <th class="p-3">Category</th>
-                                <th class="p-3">Sub-Tag</th>
-                                <th class="p-3">Price (₦)</th>
-                                <th class="p-3">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="packagesTableBody" class="text-slate-300 divide-y divide-slate-800">
-                            <!-- Populated dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- FULL RECEIPT PREVIEW LIGHTBOX -->
-    <div id="receiptPreviewModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/95" onclick="this.classList.add('hidden')">
-        <img id="fullReceiptImg" src="" class="max-w-full max-h-[90vh] rounded-xl border border-pink-500/30 object-contain">
-    </div>
-
-    <!-- MAIN JAVASCRIPT -->
-    <script>
-        /* Initial Product Database */
-        let defaultProducts = [
-            { id: 1, title: 'CODM: 80 CP', price: 1200, category: 'games', subTag: 'codm', icon: '🔫' },
-            { id: 2, title: 'CODM: 420 CP', price: 5500, category: 'games', subTag: 'codm', icon: '🔫' },
-            { id: 3, title: 'CODM: 880 CP', price: 11000, category: 'games', subTag: 'codm', icon: '🔫' },
-            { id: 4, title: 'eFootball: 130 Coins', price: 1800, category: 'games', subTag: 'efootball', icon: '⚽' },
-            { id: 5, title: 'eFootball: 320 Coins', price: 4200, category: 'games', subTag: 'efootball', icon: '⚽' },
-            { id: 6, title: 'eFootball: 1040 Coins', price: 13500, category: 'games', subTag: 'efootball', icon: '⚽' },
-            { id: 7, title: 'Free Fire: 100 Diamonds', price: 1100, category: 'games', subTag: 'freefire', icon: '💎' },
-            { id: 8, title: 'Free Fire: 530 Diamonds', price: 5200, category: 'games', subTag: 'freefire', icon: '💎' },
-            { id: 9, title: 'Free Fire: 1080 Diamonds', price: 10500, category: 'games', subTag: 'freefire', icon: '💎' },
-            { id: 10, title: 'Blood Strike: 500 Golds', price: 6200, category: 'games', subTag: 'bloodstrike', icon: '🌟' },
-            { id: 11, title: 'Blood Strike: 1000 Golds', price: 12000, category: 'games', subTag: 'bloodstrike', icon: '🌟' },
-            { id: 12, title: 'TikTok: 350 Coins', price: 5800, category: 'games', subTag: 'tiktok', icon: '🎵' },
-            { id: 13, title: 'TikTok: 700 Coins', price: 11500, category: 'games', subTag: 'tiktok', icon: '🎵' },
-            { id: 14, title: 'DLS: 1000 Coins + Gems', price: 3500, category: 'games', subTag: 'dls', icon: '⚽' },
-            { id: 15, title: 'OneState RP: 500 Coins', price: 4500, category: 'games', subTag: 'onestate', icon: '🏎️' },
-            { id: 16, title: 'Magnetic Phone Cooler', price: 19999, category: 'gadgets', subTag: 'general', icon: '❄️' },
-            { id: 17, title: 'V8 Gamepad Controller', price: 20000, category: 'gadgets', subTag: 'general', icon: '🎮' },
-            { id: 18, title: 'Fuxi-H3 Gaming Headset', price: 75000, category: 'gadgets', subTag: 'general', icon: '🎧' },
-            { id: 19, title: 'Thumb Gaming Sleeves', price: 15000, category: 'gadgets', subTag: 'general', icon: '🧤' },
-            { id: 20, title: '6-Pcs Anti-Sweat Sleeves', price: 7920, category: 'gadgets', subTag: 'general', icon: '🖐️' },
-            { id: 21, title: 'PlayStation $10 Gift Card', price: 16500, category: 'giftcards', subTag: 'general', icon: '🎮' },
-            { id: 22, title: 'Apple iTunes $10 Gift Card', price: 16000, category: 'giftcards', subTag: 'general', icon: '🍏' },
-            { id: 23, title: 'Google Play $10 Gift Card', price: 16200, category: 'giftcards', subTag: 'general', icon: '▶️' },
-            { id: 24, title: 'Steam $10 Gift Card', price: 16200, category: 'giftcards', subTag: 'general', icon: '🚂' }
-        ];
-
-        // Persistent State
-        let products = JSON.parse(localStorage.getItem('naijacp_products')) || defaultProducts;
-        let orders = JSON.parse(localStorage.getItem('naijacp_orders')) || [];
-        let currentMainCat = 'games';
-        let currentSubFilter = 'all';
-        let currentSelectedItem = null;
-        let uploadedReceiptBase64 = '';
-        let sensiShareCount = 0;
-
-        document.addEventListener("DOMContentLoaded", () => {
-            renderCatalog();
-            renderOrdersTable();
-            renderAdminPackagesTable();
-            startLiveUsers();
-            startFakePurchases();
-        });
-
-        // Utilities
-        function showToast(message) {
-            const container = document.getElementById('liveToastContainer');
-            const toast = document.createElement('div');
-            toast.className = 'toast-enter p-3.5 rounded-2xl bg-slate-900 border border-pink-500/40 text-white text-xs shadow-2xl flex items-center gap-3';
-            toast.innerHTML = `<i class="fa-solid fa-bell text-pink-400 text-lg"></i> <span class="font-medium">${message}</span>`;
-            
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.replace('toast-enter', 'toast-exit');
-                setTimeout(() => toast.remove(), 400);
-            }, 3500);
+          `;
+          grid.appendChild(card);
         }
+      });
+    }
 
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    // Filter Buttons Logic
+    window.filterCategory = function(category, btnElement) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+      renderGames(category);
+      
+      // Hide package section if filtering hides the currently selected game
+      if (currentGame && category !== 'All' && currentGame.category !== category) {
+        document.getElementById('packageSection').style.display = 'none';
+        currentGame = null;
+        currentPackage = null;
+      }
+    };
 
-        function copyAccountNumber() {
-            navigator.clipboard.writeText('7048972368');
-            showToast("Copied Account Number: 7048972368");
-        }
+    // Select Game and show packages
+    window.selectGame = function(gameId) {
+      currentGame = storeData.find(g => g.id === gameId);
+      currentPackage = null;
+      
+      renderGames(document.querySelector('.filter-btn.active').innerText); // Re-render to highlight selection
 
-        // Live Fake Purchases & Users
-        function startLiveUsers() {
-            setInterval(() => {
-                const el = document.getElementById('liveUserCounter');
-                let curr = parseInt(el.innerText.replace(',', ''));
-                let diff = Math.floor(Math.random() * 15) - 5;
-                el.innerText = (curr + diff).toLocaleString();
-            }, 3500);
-        }
+      const section = document.getElementById('packageSection');
+      section.style.display = 'block';
+      document.getElementById('selectedGameIcon').innerText = currentGame.icon;
+      document.getElementById('selectedGameName').innerText = currentGame.name;
+      document.getElementById('userIdLabel').innerText = currentGame.idLabel;
+      document.getElementById('playerUserId').value = '';
 
-        function startFakePurchases() {
-            const names = ['Chinedu', 'Oluwaseun', 'Amina', 'Ngozi', 'Emeka', 'Fatima', 'Bolaji', 'Ibrahim', 'Kehinde', 'Uche', 'Adebayo', 'Chioma', 'Yusuf', 'Ezekiel'];
-            const prefixes = ['0803', '0810', '0902', '0706', '0814', '0913', '0703'];
-            
-            setInterval(() => {
-                if(Math.random() > 0.4) {
-                    const randomName = names[Math.floor(Math.random() * names.length)];
-                    const randomPhone = prefixes[Math.floor(Math.random() * prefixes.length)] + "***" + Math.floor(1000 + Math.random() * 9000);
-                    const randomProduct = products[Math.floor(Math.random() * products.length)];
-                    
-                    showToast(`<span class="text-pink-400 font-bold">${randomName} (${randomPhone})</span> just purchased <br><span class="font-bold">${randomProduct.title}</span>`);
-                }
-            }, 8000);
-        }
+      // Render Packages
+      const pkgGrid = document.getElementById('packagesGrid');
+      pkgGrid.innerHTML = '';
+      
+      currentGame.packages.forEach((pkg, index) => {
+        const pCard = document.createElement('div');
+        pCard.className = 'package-card';
+        pCard.onclick = () => selectPackage(index, pCard);
+        pCard.innerHTML = `
+          <div class="package-name">${pkg.name}</div>
+          <div class="package-price">${pkg.price}</div>
+        `;
+        pkgGrid.appendChild(pCard);
+      });
 
-        /* Navigation & Filtering */
-        function switchMainCategory(cat) {
-            currentMainCat = cat;
-            currentSubFilter = 'all';
+      // Scroll to package section
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
 
-            document.querySelectorAll('.btn-cat').forEach(b => b.classList.remove('active-btn'));
-            document.getElementById(`catBtn-${cat}`).classList.add('active-btn');
-            
-            document.querySelectorAll('header nav a').forEach(a => a.classList.replace('text-pink-400', 'text-slate-300'));
-            document.getElementById(`nav-${cat}`)?.classList.replace('text-slate-300', 'text-pink-400');
+    // Select a package
+    window.selectPackage = function(index, element) {
+      document.querySelectorAll('.package-card').forEach(c => c.classList.remove('active'));
+      element.classList.add('active');
+      currentPackage = currentGame.packages[index];
+    };
 
-            const subFilterBox = document.getElementById('gameSubFilters');
-            if (cat === 'games') {
-                subFilterBox.classList.remove('hidden');
-                document.getElementById('sectionHeading').innerHTML = "🎮 Game Top-Up Packages";
-            } else if (cat === 'gadgets') {
-                subFilterBox.classList.add('hidden');
-                document.getElementById('sectionHeading').innerHTML = "🎧 Gaming Gear & Accessories";
-            } else {
-                subFilterBox.classList.add('hidden');
-                document.getElementById('sectionHeading').innerHTML = "💳 Gift Cards & Subscriptions";
-            }
-            renderCatalog();
-        }
+    // Checkout Modal Logic
+    window.openCheckoutModal = function() {
+      const userId = document.getElementById('playerUserId').value.trim();
 
-        function filterByGame(subTag, btn) {
-            currentSubFilter = subTag;
-            document.querySelectorAll('.btn-subfilter').forEach(b => b.classList.remove('active-btn'));
-            btn.classList.add('active-btn');
-            renderCatalog();
-        }
+      if (!currentPackage) {
+        alert("Please select a top-up package first.");
+        return;
+      }
+      if (!userId) {
+        alert("Please enter your Player ID or Username.");
+        return;
+      }
 
-        function scrollToSensi() {
-            document.getElementById('sensitivity').scrollIntoView({ behavior: 'smooth' });
-        }
+      document.getElementById('modalGame').innerText = currentGame.name;
+      document.getElementById('modalId').innerText = userId;
+      document.getElementById('modalPackage').innerText = currentPackage.name;
+      document.getElementById('modalPrice').innerText = currentPackage.price;
 
-        /* Render Catalog Cards */
-        function renderCatalog() {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
-            let filtered = products.filter(p => p.category === currentMainCat);
-            if (currentMainCat === 'games' && currentSubFilter !== 'all') {
-                filtered = filtered.filter(p => p.subTag === currentSubFilter);
-            }
+      document.getElementById('checkoutModal').classList.add('active');
+    };
 
-            if (filtered.length === 0) {
-                grid.innerHTML = '<p class="text-slate-400 text-sm col-span-full text-center py-10">No packages found in this category.</p>';
-                return;
-            }
+    window.closeCheckoutModal = function() {
+      document.getElementById('checkoutModal').classList.remove('active');
+    };
 
-            filtered.forEach(p => {
-                grid.innerHTML += `
-                    <div class="glass-card p-4 rounded-3xl flex flex-col justify-between text-center group cursor-pointer border border-slate-800 hover:border-pink-500 transition duration-300">
-                        <div class="w-16 h-16 mx-auto bg-slate-900/80 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-slate-700/50 group-hover:scale-110 transition duration-300">
-                            ${p.icon.length > 4 ? `<img src="${p.icon}" class="w-full h-full object-cover rounded-2xl">` : p.icon}
-                        </div>
-                        <h3 class="font-bold text-sm text-white mb-2 leading-tight">${p.title}</h3>
-                        <div class="text-pink-400 font-black text-lg mb-4">₦${Number(p.price).toLocaleString()}</div>
-                        <button class="w-full py-2.5 rounded-xl bg-pink-500/10 text-pink-400 font-extrabold text-xs border border-pink-500/30 group-hover:bg-pink-500 group-hover:text-black transition" onclick="openCheckout(${p.id})">
-                            Buy Now
-                        </button>
-                    </div>
-                `;
-            });
-        }
+    // Complete via WhatsApp
+    window.completeOrderViaWhatsApp = function() {
+      const userId = document.getElementById('playerUserId').value.trim();
+      const text = `Hello! I want to buy a top-up.\n\n*Game:* ${currentGame.name}\n*ID:* ${userId}\n*Package:* ${currentPackage.name}\n*Price:* ${currentPackage.price}\n\nPlease send payment details.`;
+      
+      const whatsappUrl = `https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+      window.open(whatsappUrl, '_blank');
+      closeCheckoutModal();
+    };
 
-        /* Free Fire Generator */
-        function shareToWhatsApp() {
-            sensiShareCount++;
-            const remaining = Math.max(0, 5 - sensiShareCount);
-            const progress = (sensiShareCount / 5) * 100;
-            
-            document.getElementById('taskProgressText').innerText = `${sensiShareCount}/5 Shares`;
-            document.getElementById('progressBar').style.width = `${progress}%`;
-            document.getElementById('sharesLeft').innerText = remaining;
-
-            const text = encodeURIComponent("🔥 Get 100% Free FreeFire Headshot Sensitivity & Buy Cheap Game Top-Ups at NAIJACP.NG! Check it out now!");
-            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
-
-            if(sensiShareCount >= 5) {
-                setTimeout(() => {
-                    document.getElementById('sensiUnlockArea').classList.add('hidden');
-                    document.getElementById('sensiFormArea').classList.remove('hidden');
-                }, 1000);
-            }
-        }
-
-        function generateSensi(e) {
-            e.preventDefault();
-            const ram = parseInt(document.getElementById('ramSize').value);
-            let gen = 95, red = 90, scope2 = 88, scope4 = 82, awm = 55, btn = '48%', dpi = 'Default';
-
-            if (ram === 2) { gen=100; red=98; scope2=95; scope4=90; awm=65; btn='45%'; dpi='410 DPI'; } 
-            else if (ram === 3) { gen=98; red=95; scope2=92; scope4=88; awm=60; btn='47%'; dpi='420 DPI'; } 
-            else if (ram === 4) { gen=94; red=90; scope2=85; scope4=80; awm=50; btn='50%'; dpi='Standard'; } 
-            else if (ram >= 6) { gen=88; red=85; scope2=80; scope4=75; awm=45; btn='55%'; dpi='Standard'; }
-
-            document.getElementById('valGen').innerText = gen;
-            document.getElementById('valRed').innerText = red;
-            document.getElementById('val2x').innerText = scope2;
-            document.getElementById('val4x').innerText = scope4;
-            document.getElementById('valAwm').innerText = awm;
-            document.getElementById('valBtn').innerText = btn;
-            document.getElementById('valDpi').innerText = dpi;
-
-            document.getElementById('sensiResults').classList.remove('hidden');
-            showToast("Sensitivity optimized for your device! 🎯");
-        }
-
-        /* Checkout Modal */
-        function openCheckout(productId) {
-            currentSelectedItem = products.find(p => p.id === productId);
-            if (!currentSelectedItem) return;
-
-            document.getElementById('checkoutItemTitle').innerHTML = `Item: <strong class="text-white">${currentSelectedItem.title}</strong>`;
-            document.getElementById('checkoutItemPrice').innerText = `₦${Number(currentSelectedItem.price).toLocaleString()}`;
-            openModal('checkoutModal');
-        }
-
-        function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (file) {
-                document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-circle-check text-green-400 text-xl"></i> <span class="text-green-400 font-bold">${file.name} Attached</span>`;
-                const reader = new FileReader();
-                reader.onload = function(evt) { uploadedReceiptBase64 = evt.target.result; };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function submitOrder(e) {
-            e.preventDefault();
-            if (!uploadedReceiptBase64) {
-                alert("Please attach your payment screenshot receipt!");
-                return;
-            }
-
-            const newOrder = {
-                id: Date.now(),
-                date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-                customer: document.getElementById('custName').value,
-                gameId: document.getElementById('custGameId').value,
-                phone: document.getElementById('custPhone').value,
-                product: currentSelectedItem.title,
-                amount: currentSelectedItem.price,
-                receipt: uploadedReceiptBase64,
-                status: 'Pending'
-            };
-
-            orders.unshift(newOrder);
-            localStorage.setItem('naijacp_orders', JSON.stringify(orders));
-            renderOrdersTable();
-            
-            closeModal('checkoutModal');
-            document.getElementById('orderForm').reset();
-            document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i> Click to choose receipt screenshot image`;
-            uploadedReceiptBase64 = '';
-            
-            showToast("Order submitted successfully! Awaiting verification.");
-        }
-
-        /* Admin Controls */
-        function handleAdminLogin(e) {
-            e.preventDefault();
-            const u = document.getElementById('adminUser').value;
-            const p = document.getElementById('adminPass').value;
-            if (u && p) {
-                closeModal('adminAuthModal');
-                openModal('adminModal');
-            }
-        }
-
-        function switchAdminTab(tab, btn) {
-            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active-btn'));
-            if(btn) btn.classList.add('active-btn');
-            
-            document.getElementById('adminTabOrders').classList.add('hidden');
-            document.getElementById('adminTabPackages').classList.add('hidden');
-            
-            if(tab === 'orders') document.getElementById('adminTabOrders').classList.remove('hidden');
-            if(tab === 'packages') document.getElementById('adminTabPackages').classList.remove('hidden');
-        }
-
-        function renderOrdersTable() {
-            const tbody = document.getElementById('ordersTableBody');
-            if (orders.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center">No orders submitted yet.</td></tr>';
-                return;
-            }
-            tbody.innerHTML = orders.map(o => `
-                <tr class="hover:bg-slate-900/50">
-                    <td class="p-3">${o.date}</td>
-                    <td class="p-3 font-bold">${o.customer}</td>
-                    <td class="p-3">${o.gameId} <br> <span class="text-[10px] text-slate-400">${o.phone}</span></td>
-                    <td class="p-3 text-pink-400">${o.product}</td>
-                    <td class="p-3">₦${Number(o.amount).toLocaleString()}</td>
-                    <td class="p-3">
-                        <img src="${o.receipt}" class="w-10 h-10 object-cover rounded border border-slate-700 cursor-pointer hover:border-pink-500" onclick="previewReceipt('${o.receipt}')">
-                    </td>
-                    <td class="p-3"><span class="px-2 py-1 bg-amber-500/20 text-amber-400 rounded text-[10px] font-bold uppercase">${o.status}</span></td>
-                </tr>
-            `).join('');
-        }
-
-        function previewReceipt(src) {
-            document.getElementById('fullReceiptImg').src = src;
-            document.getElementById('receiptPreviewModal').classList.remove('hidden');
-            document.getElementById('receiptPreviewModal').classList.add('flex');
-        }
-
-        function renderAdminPackagesTable() {
-            const tbody = document.getElementById('packagesTableBody');
-            tbody.innerHTML = products.map(p => `
-                <tr class="hover:bg-slate-900/50">
-                    <td class="p-3 text-lg">${p.icon}</td>
-                    <td class="p-3 font-bold">${p.title}</td>
-                    <td class="p-3 uppercase text-[10px]">${p.category}</td>
-                    <td class="p-3 uppercase text-[10px] text-slate-400">${p.subTag}</td>
-                    <td class="p-3 text-pink-400">₦${Number(p.price).toLocaleString()}</td>
-                    <td class="p-3">
-                        <button class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-bold hover:bg-red-500 hover:text-white transition" onclick="deletePackage(${p.id})">Delete</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function savePackage(e) {
-            e.preventDefault();
-            const newPkg = {
-                id: Date.now(),
-                title: document.getElementById('pkgTitle').value,
-                price: Number(document.getElementById('pkgPrice').value),
-                category: document.getElementById('pkgCategory').value,
-                subTag: document.getElementById('pkgSubTag').value,
-                icon: document.getElementById('pkgIcon').value || '🎮'
-            };
-            products.push(newPkg);
-            localStorage.setItem('naijacp_products', JSON.stringify(products));
-            renderAdminPackagesTable();
-            renderCatalog();
-            document.getElementById('pkgForm').reset();
-            showToast("Package saved successfully!");
-        }
-
-        function deletePackage(id) {
-            if(confirm('Delete this package?')) {
-                products = products.filter(p => p.id !== id);
-                localStorage.setItem('naijacp_products', JSON.stringify(products));
-                renderAdminPackagesTable();
-                renderCatalog();
-            }
-        }
-
-        function exportUpdatedCode() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ products, orders }));
-            const anchor = document.createElement('a');
-            anchor.setAttribute("href", dataStr);
-            anchor.setAttribute("download", "naijacp_backup_data.json");
-            document.body.appendChild(anchor);
-            anchor.click();
-            anchor.remove();
-            showToast("Source Data Exported!");
-        }
-    </script>
+    // Initial Render
+    renderGames();
+  </script>
 </body>
 </html>
