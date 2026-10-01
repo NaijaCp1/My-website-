@@ -97,25 +97,25 @@
     <!-- Header Navigation -->
     <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-pink-900/30 px-4 sm:px-8 py-3.5">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-2.5 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                <img src="IMG_3902_bf1483.jpeg" alt="Logo" class="w-10 h-10 rounded-xl object-cover shadow-lg shadow-pink-500/40">
-                <span class="text-xl sm:text-2xl font-black tracking-tight text-white">NAIJACP<span class="text-pink-500">.NG</span></span>
+            <!-- LOGO: Updated with custom image URL -->
+            <div class="flex items-center gap-2.5 cursor-pointer">
+                <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-pink-500/40 bg-slate-900">
+                    <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
+                </div>
+                <span class="text-xl sm:text-2xl font-black tracking-tight text-white">
+                    NAIJACP<span id="secretAdminTrigger" class="text-pink-500 cursor-pointer select-none">.NG</span>
+                </span>
             </div>
 
             <nav class="hidden md:flex items-center gap-6">
                 <a onclick="switchMainCategory('games')" id="nav-games" class="text-sm font-bold text-pink-400 cursor-pointer transition hover:text-pink-300">Games</a>
                 <a onclick="switchMainCategory('gadgets')" id="nav-gadgets" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Gadgets</a>
                 <a onclick="switchMainCategory('giftcards')" id="nav-giftcards" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Gift Cards</a>
-                <a onclick="scrollToSensi()" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Free FF Sensi</a>
             </nav>
-
-            <button class="px-4 py-2 rounded-xl bg-slate-900 border border-pink-500/30 text-pink-400 font-bold text-xs hover:bg-pink-500 hover:text-black transition" onclick="openModal('adminAuthModal')">
-                <i class="fa-solid fa-lock mr-1"></i> Admin Login
-            </button>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Prominent Sensi Button -->
     <div class="relative pt-12 pb-16 overflow-hidden px-4 sm:px-6 text-center border-b border-pink-500/20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-pink-950/20 via-black to-black">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-slate-300 mb-6">
             <span class="w-2.5 h-2.5 rounded-full bg-pink-500 pulse-dot"></span>
@@ -123,7 +123,12 @@
             <span>Gamers Online Right Now</span>
         </div>
         <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 tracking-tight">Top Up Your Favorite Games Fast</h1>
-        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid directly via Nigerian Bank Transfer.</p>
+        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid directly via Nigerian Bank Transfer.</p>
+        
+        <!-- MASSIVE SENSI BUTTON SO PEOPLE SEE IT FIRST -->
+        <button onclick="scrollToSensi()" class="px-8 py-4 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-lg shadow-[0_0_20px_rgba(236,72,153,0.5)] transition animate-pulse mx-auto flex items-center justify-center gap-3">
+            <i class="fa-solid fa-crosshair"></i> 🔥 GET FREE FIRE HEADSHOT SENSI
+        </button>
     </div>
 
     <!-- Main Container -->
@@ -161,7 +166,7 @@
         </section>
 
         <!-- FREE FIRE SENSITIVITY GENERATOR TOOL -->
-        <section id="sensitivity" class="py-12 border-t border-pink-500/20">
+        <section id="sensitivity" class="py-12 border-t border-pink-500/20 scroll-mt-24">
             <div class="text-center mb-8">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase mb-3">
                     <i class="fa-solid fa-crosshair"></i> 100% Free Tool
@@ -197,8 +202,8 @@
                     
                     <form id="sensiForm" onsubmit="generateSensi(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Phone Brand / Model</label>
-                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Exact Phone Brand & Model</label>
+                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone 11" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">RAM Size</label>
@@ -212,7 +217,7 @@
                         </div>
                         <div class="md:col-span-2 mt-2">
                             <button type="submit" class="w-full py-4 rounded-2xl bg-pink-500 hover:bg-pink-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-pink-500/20">
-                                Generate Best Settings ⚡
+                                Generate Unique Settings ⚡
                             </button>
                         </div>
                     </form>
@@ -261,6 +266,12 @@
 
     <!-- Toast Notifications Container -->
     <div id="liveToastContainer" class="fixed bottom-5 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
+
+    <!-- Telegram Customer Support Floating Button -->
+    <a href="https://t.me/naijacp0" target="_blank" class="fixed bottom-5 left-5 z-[990] bg-[#229ED9] hover:bg-[#1CA1C1] text-white px-4 py-3 rounded-full flex items-center gap-2 shadow-[0_0_15px_rgba(34,158,217,0.4)] transition hover:scale-105 cursor-pointer">
+        <i class="fa-brands fa-telegram text-2xl"></i>
+        <span class="text-xs font-bold hidden sm:inline">Customer Support</span>
+    </a>
 
     <!-- MODALS -->
 
@@ -508,6 +519,7 @@
             renderAdminPackagesTable();
             startLiveUsers();
             startFakePurchases();
+            initSecretAdminTrigger();
         });
 
         // Utilities
@@ -530,6 +542,21 @@
         function copyAccountNumber() {
             navigator.clipboard.writeText('7048972368');
             showToast("Copied Account Number: 7048972368");
+        }
+
+        // Secret Admin Trigger
+        function initSecretAdminTrigger() {
+            let clicks = 0;
+            const trigger = document.getElementById('secretAdminTrigger');
+            trigger.addEventListener('click', () => {
+                clicks++;
+                if (clicks >= 5) {
+                    openModal('adminAuthModal');
+                    clicks = 0; // Reset
+                }
+                // Clear clicks if they aren't clicking fast enough
+                setTimeout(() => { clicks = 0; }, 2500);
+            });
         }
 
         // Live Fake Purchases & Users
@@ -629,7 +656,7 @@
             });
         }
 
-        /* Free Fire Generator */
+        /* Free Fire Generator (200+ Variations Algorithm) */
         function shareToWhatsApp() {
             sensiShareCount++;
             const remaining = Math.max(0, 5 - sensiShareCount);
@@ -653,21 +680,41 @@
         function generateSensi(e) {
             e.preventDefault();
             const ram = parseInt(document.getElementById('ramSize').value);
-            const phoneInput = document.getElementById('phoneModel').value;
-            let model = phoneInput.toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0,4) || "DEV";
+            const phoneInputRaw = document.getElementById('phoneModel').value.trim();
+            const phoneInput = phoneInputRaw.toLowerCase();
+            
+            // Generate a unique Number Hash purely from the letters of the phone they typed
+            let hash = 0;
+            for (let i = 0; i < phoneInput.length; i++) {
+                hash = phoneInput.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            hash = Math.abs(hash); // Ensure it's a positive number
 
-            let gen = 195, red = 185, scope2 = 175, scope4 = 160, awm = 120, btn = '48%', dpi = 'Default';
+            // Base maximums dependent on RAM, so 2GB still behaves like 2GB, 8GB like 8GB, 
+            // but the exact specific numbers are uniquely adjusted by the device hash!
+            let baseMax;
+            if (ram <= 3) baseMax = 200;
+            else if (ram === 4) baseMax = 192;
+            else if (ram === 6) baseMax = 180;
+            else baseMax = 165;
 
-            // Scale downwards from 200 max based on available device RAM
-            if (ram === 2) { gen=200; red=196; scope2=189; scope4=185; awm=145; btn='52%'; dpi='410 DPI'; } 
-            else if (ram === 3) { gen=195; red=190; scope2=185; scope4=175; awm=135; btn='49%'; dpi='420 DPI'; } 
-            else if (ram === 4) { gen=188; red=182; scope2=178; scope4=168; awm=116; btn='46%'; dpi='Standard'; } 
-            else if (ram === 6) { gen=175; red=168; scope2=160; scope4=150; awm=105; btn='44%'; dpi='Standard'; }
-            else if (ram >= 8) { gen=160; red=152; scope2=145; scope4=135; awm=96; btn='40%'; dpi='Standard'; }
+            // This math ensures every single phone name will generate slightly different numbers
+            // allowing for thousands of unique combinations automatically!
+            let gen = (baseMax - (hash % 15)); 
+            let red = (baseMax - 5 - (hash % 18));
+            let scope2 = (baseMax - 8 - (hash % 20));
+            let scope4 = (baseMax - 15 - (hash % 25));
+            let awm = (120 - (hash % 30));
+            let btn = (40 + (hash % 22)) + '%';
+            
+            // DPI calculation based on Hash
+            let dpi = (380 + (hash % 220)) + ' DPI';
+            if (ram <= 3) dpi = (450 + (hash % 100)) + ' DPI'; // lower ram needs higher base dpi usually
 
-            // Dynamic Shareable Sensitivity Code Generation
-            const randomCode = Math.floor(1000 + Math.random() * 9000);
-            const sensiCode = `FF-SENSI-${model}-${ram}GB-${randomCode}`;
+            // Generate the unique code
+            let shortName = phoneInputRaw.replace(/[^A-Z0-9a-z]/g, '').substring(0, 5).toUpperCase() || "DEV";
+            let codeRandomness = Math.floor(10000 + (hash % 89999));
+            const sensiCode = `FF-${shortName}-${ram}G-${codeRandomness}`;
 
             document.getElementById('valGen').innerText = gen;
             document.getElementById('valRed').innerText = red;
@@ -679,19 +726,19 @@
 
             const resultsDiv = document.getElementById('sensiResults');
 
-            // Inject the customized Sensitivity Code box to the results board
             let codeBox = document.getElementById('generatedSensiCode');
             if(!codeBox) {
                 codeBox = document.createElement('div');
                 codeBox.id = 'generatedSensiCode';
-                codeBox.className = 'col-span-2 md:col-span-4 mt-3 bg-slate-900 p-3 rounded-xl border border-pink-500/30 text-center';
+                codeBox.className = 'col-span-2 md:col-span-4 mt-3 bg-slate-900 p-3 rounded-xl border border-pink-500/30 text-center shadow-lg';
                 resultsDiv.appendChild(codeBox);
             }
-            codeBox.innerHTML = `<span class="block text-[11px] text-pink-400 uppercase font-bold mb-1">Your Custom Sensitivity Code</span>
-                                 <span class="text-lg font-black text-white font-mono select-all">${sensiCode}</span>`;
+            codeBox.innerHTML = `<span class="block text-[11px] text-pink-400 uppercase font-bold mb-1">Your Custom Optimized Device Code</span>
+                                 <span class="text-xl font-black text-white font-mono select-all">${sensiCode}</span>
+                                 <p class="text-[10px] text-slate-500 mt-1">Unique setup generated exclusively for ${phoneInputRaw}</p>`;
 
             resultsDiv.classList.remove('hidden');
-            showToast("Sensitivity optimized for your device! 🎯");
+            showToast("Settings uniquely optimized for your device! 🎯");
         }
 
         /* Checkout Modal */
