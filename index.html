@@ -108,10 +108,6 @@
                 <a onclick="switchMainCategory('giftcards')" id="nav-giftcards" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Gift Cards</a>
                 <a onclick="scrollToSensi()" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Free FF Sensi</a>
             </nav>
-
-            <button class="px-4 py-2 rounded-xl bg-slate-900 border border-pink-500/30 text-pink-400 font-bold text-xs hover:bg-pink-500 hover:text-black transition" onclick="openModal('adminAuthModal')">
-                <i class="fa-solid fa-lock mr-1"></i> Admin Login
-            </button>
         </div>
     </header>
 
@@ -129,39 +125,8 @@
     <!-- Main Container -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
 
-        <!-- MAIN CATEGORY NAVIGATION BUTTONS -->
-        <div class="flex flex-wrap items-center gap-3 mb-8 justify-center sm:justify-start">
-            <button class="btn-cat active-btn px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-games" onclick="switchMainCategory('games')">🎮 All Game Packages</button>
-            <button class="btn-cat px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-gadgets" onclick="switchMainCategory('gadgets')">🎧 Gaming Gear & Gadgets</button>
-            <button class="btn-cat px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-giftcards" onclick="switchMainCategory('giftcards')">💳 Gift Cards & Subs</button>
-        </div>
-
-        <!-- GAME SUB-FILTER BUTTONS -->
-        <div id="gameSubFilters" class="flex flex-wrap gap-2 mb-8 bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
-            <button class="btn-subfilter active-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('all', this)">All Games</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('codm', this)">Call of Duty (CODM)</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('efootball', this)">eFootball PES</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('freefire', this)">Free Fire</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('bloodstrike', this)">Blood Strike</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('tiktok', this)">TikTok Coins</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('dls', this)">Dream League (DLS)</button>
-            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('onestate', this)">OneState RP</button>
-        </div>
-
-        <!-- PRODUCTS GRID -->
-        <section id="catalogSection" class="mb-16">
-            <div class="flex items-center gap-3 mb-6">
-                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-pink-500 pl-4" id="sectionHeading">
-                    🎮 Game Top-Up Packages
-                </h2>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid">
-                <!-- Loaded Dynamically -->
-            </div>
-        </section>
-
-        <!-- FREE FIRE SENSITIVITY GENERATOR TOOL -->
-        <section id="sensitivity" class="py-12 border-t border-pink-500/20">
+        <!-- FREE FIRE SENSITIVITY GENERATOR TOOL (Moved to Top) -->
+        <section id="sensitivity" class="mb-12 pb-10 border-b border-pink-500/20">
             <div class="text-center mb-8">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase mb-3">
                     <i class="fa-solid fa-crosshair"></i> 100% Free Tool
@@ -252,10 +217,42 @@
             </div>
         </section>
 
+        <!-- MAIN CATEGORY NAVIGATION BUTTONS -->
+        <div class="flex flex-wrap items-center gap-3 mb-8 justify-center sm:justify-start">
+            <button class="btn-cat active-btn px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-games" onclick="switchMainCategory('games')">🎮 All Game Packages</button>
+            <button class="btn-cat px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-gadgets" onclick="switchMainCategory('gadgets')">🎧 Gaming Gear & Gadgets</button>
+            <button class="btn-cat px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-giftcards" onclick="switchMainCategory('giftcards')">💳 Gift Cards & Subs</button>
+        </div>
+
+        <!-- GAME SUB-FILTER BUTTONS -->
+        <div id="gameSubFilters" class="flex flex-wrap gap-2 mb-8 bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+            <button class="btn-subfilter active-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('all', this)">All Games</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('codm', this)">Call of Duty (CODM)</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('efootball', this)">eFootball PES</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('freefire', this)">Free Fire</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('bloodstrike', this)">Blood Strike</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('tiktok', this)">TikTok Coins</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('dls', this)">Dream League (DLS)</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('onestate', this)">OneState RP</button>
+        </div>
+
+        <!-- PRODUCTS GRID -->
+        <section id="catalogSection" class="mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-pink-500 pl-4" id="sectionHeading">
+                    🎮 Game Top-Up Packages
+                </h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid">
+                <!-- Loaded Dynamically -->
+            </div>
+        </section>
+
     </div>
 
+    <!-- Hidden admin trigger placed on the copyright text -->
     <footer class="border-t border-slate-800 bg-black py-8 text-slate-500 text-xs text-center mt-auto">
-        <p>&copy; 2026 NaijaCP Marketplace. All Rights Reserved.</p>
+        <p onclick="openModal('adminAuthModal')" class="cursor-pointer">&copy; 2026 NaijaCP Marketplace. All Rights Reserved.</p>
         <p class="mt-2 text-[11px]">Bank Payment Provider: MOMO PSB | Account Number: 7048972368 (OGUNLANA JAMIU)</p>
     </footer>
 
@@ -370,10 +367,12 @@
                 <div class="overflow-x-auto bg-slate-950 rounded-xl border border-slate-800">
                     <table class="w-full text-left text-xs whitespace-nowrap">
                         <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
+                            <!-- Updated Table Headers -->
                             <tr>
                                 <th class="p-3">Date</th>
-                                <th class="p-3">Customer</th>
-                                <th class="p-3">Game ID / Phone</th>
+                                <th class="p-3">Customer Name</th>
+                                <th class="p-3">WhatsApp Number</th>
+                                <th class="p-3">Game ID</th>
                                 <th class="p-3">Product</th>
                                 <th class="p-3">Amount</th>
                                 <th class="p-3">Screenshot</th>
@@ -381,7 +380,7 @@
                             </tr>
                         </thead>
                         <tbody id="ordersTableBody" class="text-slate-300 divide-y divide-slate-800">
-                            <tr><td colspan="7" class="p-4 text-center">No orders submitted yet.</td></tr>
+                            <tr><td colspan="8" class="p-4 text-center">No orders submitted yet.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -742,14 +741,16 @@
         function renderOrdersTable() {
             const tbody = document.getElementById('ordersTableBody');
             if (orders.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center">No orders submitted yet.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" class="p-4 text-center">No orders submitted yet.</td></tr>';
                 return;
             }
+            // Update admin rendering to explicitly separate WhatsApp and Game ID
             tbody.innerHTML = orders.map(o => `
                 <tr class="hover:bg-slate-900/50">
                     <td class="p-3">${o.date}</td>
                     <td class="p-3 font-bold">${o.customer}</td>
-                    <td class="p-3">${o.gameId} <br> <span class="text-[10px] text-slate-400">${o.phone}</span></td>
+                    <td class="p-3">${o.phone}</td>
+                    <td class="p-3">${o.gameId}</td>
                     <td class="p-3 text-pink-400">${o.product}</td>
                     <td class="p-3">₦${Number(o.amount).toLocaleString()}</td>
                     <td class="p-3">
