@@ -97,7 +97,7 @@
     <!-- Header Navigation -->
     <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-pink-900/30 px-4 sm:px-8 py-3.5">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <!-- LOGO: Updated with custom image URL -->
+            <!-- LOGO -->
             <div class="flex items-center gap-2.5 cursor-pointer">
                 <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-pink-500/40 bg-slate-900">
                     <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
@@ -115,7 +115,7 @@
         </div>
     </header>
 
-    <!-- Hero Section with Prominent Sensi Button -->
+    <!-- Hero Section -->
     <div class="relative pt-12 pb-16 overflow-hidden px-4 sm:px-6 text-center border-b border-pink-500/20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-pink-950/20 via-black to-black">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-slate-300 mb-6">
             <span class="w-2.5 h-2.5 rounded-full bg-pink-500 pulse-dot"></span>
@@ -125,7 +125,6 @@
         <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 tracking-tight">Top Up Your Favorite Games Fast</h1>
         <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid directly via Nigerian Bank Transfer.</p>
         
-        <!-- MASSIVE SENSI BUTTON SO PEOPLE SEE IT FIRST -->
         <button onclick="scrollToSensi()" class="px-8 py-4 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-lg shadow-[0_0_20px_rgba(236,72,153,0.5)] transition animate-pulse mx-auto flex items-center justify-center gap-3">
             <i class="fa-solid fa-crosshair"></i> 🔥 GET FREE FIRE HEADSHOT SENSI
         </button>
@@ -421,7 +420,7 @@
                             <option value="onestate">OneState RP</option>
                             <option value="general">General / Other</option>
                         </select>
-                        <input type="text" id="pkgIcon" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs" placeholder="Icon (e.g. 🔫)">
+                        <input type="text" id="pkgIcon" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs" placeholder="Icon (e.g. 🎮)">
                     </div>
                     <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-400 text-black text-xs font-bold rounded-lg transition">Save Package</button>
                 </form>
@@ -552,9 +551,8 @@
                 clicks++;
                 if (clicks >= 5) {
                     openModal('adminAuthModal');
-                    clicks = 0; // Reset
+                    clicks = 0;
                 }
-                // Clear clicks if they aren't clicking fast enough
                 setTimeout(() => { clicks = 0; }, 2500);
             });
         }
@@ -567,7 +565,6 @@
                 let diff = Math.floor(Math.random() * 15) - 5;
                 curr = curr + diff;
                 
-                // Bounds enforcement to keep users between 6000 and 8000
                 if (curr > 8000) curr = 7990 - Math.floor(Math.random() * 10);
                 if (curr < 6000) curr = 6010 + Math.floor(Math.random() * 10);
                 
@@ -656,7 +653,7 @@
             });
         }
 
-        /* Free Fire Generator (200+ Variations Algorithm) */
+        /* Free Fire Generator */
         function shareToWhatsApp() {
             sensiShareCount++;
             const remaining = Math.max(0, 5 - sensiShareCount);
@@ -666,7 +663,8 @@
             document.getElementById('progressBar').style.width = `${progress}%`;
             document.getElementById('sharesLeft').innerText = remaining;
 
-            const text = encodeURIComponent("🔥 Get 100% Free FreeFire Headshot Sensitivity & Buy Cheap Game Top-Ups at NAIJACP.NG! Check it out now!");
+            // Updated with your GitHub site link below 👇
+            const text = encodeURIComponent("🔥 Get 100% Free FreeFire Headshot Sensitivity & Buy Cheap Game Top-Ups at NAIJACP.NG! Check it out now: https://naijacp1.github.io/My-website-/");
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
             if(sensiShareCount >= 5) {
@@ -683,23 +681,18 @@
             const phoneInputRaw = document.getElementById('phoneModel').value.trim();
             const phoneInput = phoneInputRaw.toLowerCase();
             
-            // Generate a unique Number Hash purely from the letters of the phone they typed
             let hash = 0;
             for (let i = 0; i < phoneInput.length; i++) {
                 hash = phoneInput.charCodeAt(i) + ((hash << 5) - hash);
             }
-            hash = Math.abs(hash); // Ensure it's a positive number
+            hash = Math.abs(hash);
 
-            // Base maximums dependent on RAM, so 2GB still behaves like 2GB, 8GB like 8GB, 
-            // but the exact specific numbers are uniquely adjusted by the device hash!
             let baseMax;
             if (ram <= 3) baseMax = 200;
             else if (ram === 4) baseMax = 192;
             else if (ram === 6) baseMax = 180;
             else baseMax = 165;
 
-            // This math ensures every single phone name will generate slightly different numbers
-            // allowing for thousands of unique combinations automatically!
             let gen = (baseMax - (hash % 15)); 
             let red = (baseMax - 5 - (hash % 18));
             let scope2 = (baseMax - 8 - (hash % 20));
@@ -707,11 +700,9 @@
             let awm = (120 - (hash % 30));
             let btn = (40 + (hash % 22)) + '%';
             
-            // DPI calculation based on Hash
             let dpi = (380 + (hash % 220)) + ' DPI';
-            if (ram <= 3) dpi = (450 + (hash % 100)) + ' DPI'; // lower ram needs higher base dpi usually
+            if (ram <= 3) dpi = (450 + (hash % 100)) + ' DPI';
 
-            // Generate the unique code
             let shortName = phoneInputRaw.replace(/[^A-Z0-9a-z]/g, '').substring(0, 5).toUpperCase() || "DEV";
             let codeRandomness = Math.floor(10000 + (hash % 89999));
             const sensiCode = `FF-${shortName}-${ram}G-${codeRandomness}`;
