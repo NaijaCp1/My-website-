@@ -335,6 +335,17 @@
         </div>
     </div>
 
+    <!-- PROCESSING MODAL -->
+    <div id="processingModal" class="fixed inset-0 z-[110] hidden flex-col items-center justify-center p-4 bg-black/95 backdrop-blur-md">
+        <div class="w-16 h-16 border-4 border-pink-500 border-t-transparent rounded-full animate-spin mb-4" id="processingSpinner"></div>
+        <div class="w-16 h-16 rounded-full bg-green-500/20 text-green-400 hidden items-center justify-center text-3xl mb-4" id="processingSuccessIcon">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <h2 class="text-2xl font-black text-white mb-2 text-center" id="processingTitle">Processing Payment...</h2>
+        <p class="text-slate-400 text-sm text-center max-w-sm mb-6" id="processingDesc">Please wait while we securely submit your order and verify your screenshot.</p>
+        <button id="closeProcessingBtn" onclick="closeModal('processingModal')" class="hidden px-8 py-3 bg-pink-500 hover:bg-pink-400 text-black font-bold rounded-xl transition">Return to Home</button>
+    </div>
+
     <!-- ADMIN AUTHENTICATION MODAL -->
     <div id="adminAuthModal" class="fixed inset-0 z-[70] hidden flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
         <div class="glass-modal w-full max-w-sm rounded-3xl p-6 text-center border border-pink-500/40 relative">
@@ -371,7 +382,8 @@
             <div class="flex gap-2 overflow-x-auto pb-2 mb-4 border-b border-slate-800 flex-shrink-0 hide-scroll">
                 <button class="admin-tab-btn active-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 whitespace-nowrap transition" onclick="switchAdminTab('orders', this)">Receipts & Orders</button>
                 <button class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 whitespace-nowrap transition" onclick="switchAdminTab('packages', this)">Manage Packages</button>
-                <button class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-green-400 border border-slate-800 whitespace-nowrap hover:bg-green-500/20 transition" onclick="exportUpdatedCode()">📥 Export Source Data</button>
+                <button class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-green-400 border border-slate-800 whitespace-nowrap hover:bg-green-500/20 transition" onclick="exportUpdatedCode()">📥 Export Data</button>
+                <button class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-pink-400 border border-slate-800 whitespace-nowrap hover:bg-pink-500/20 transition" onclick="generateSourceCode()">📄 Generate Source Code</button>
             </div>
 
             <!-- TAB 1: ORDERS -->
@@ -422,7 +434,10 @@
                         </select>
                         <input type="text" id="pkgIcon" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs" placeholder="Icon (e.g. 🎮)">
                     </div>
-                    <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-400 text-black text-xs font-bold rounded-lg transition">Save Package</button>
+                    <div class="flex gap-2 mt-2">
+                        <button type="submit" id="pkgSubmitBtn" class="px-6 py-2 bg-green-500 hover:bg-green-400 text-black text-xs font-bold rounded-lg transition">Save Package</button>
+                        <button type="button" onclick="resetPkgForm()" class="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded-lg transition">Cancel Edit</button>
+                    </div>
                 </form>
 
                 <div class="overflow-x-auto bg-slate-950 rounded-xl border border-slate-800">
@@ -451,9 +466,24 @@
         <img id="fullReceiptImg" src="" class="max-w-full max-h-[90vh] rounded-xl border border-pink-500/30 object-contain">
     </div>
 
+    <!-- SOURCE CODE GENERATOR MODAL -->
+    <div id="sourceCodeModal" class="fixed inset-0 z-[120] hidden flex-col items-center justify-center p-4 bg-black/95 backdrop-blur-md">
+        <div class="glass-modal w-full max-w-4xl h-[90vh] rounded-3xl p-6 relative flex flex-col shadow-2xl">
+            <button onclick="closeModal('sourceCodeModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-black text-white mb-2"><i class="fa-solid fa-code text-pink-400"></i> Generated Source Code</h3>
+            <p class="text-xs text-slate-400 mb-4">All your edits are baked in! Copy all the code below and paste it into your GitHub <strong>index.html</strong> file to apply your changes instantly.</p>
+            <textarea id="sourceCodeArea" class="flex-1 w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-white text-xs font-mono focus:outline-none focus:border-pink-500 resize-none mb-4" readonly></textarea>
+            <button onclick="copySourceCode()" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition flex items-center justify-center gap-2">
+                <i class="fa-regular fa-copy"></i> Copy Full Source Code
+            </button>
+        </div>
+    </div>
+
     <!-- MAIN JAVASCRIPT -->
     <script>
-        /* Initial Product Database */
+        /* --- PRODUCTS DATABASE START --- */
         let defaultProducts = [
             { id: 1, title: 'CODM: 80 CP', price: 1200, category: 'games', subTag: 'codm', icon: 'https://files.catbox.moe/w4tgaw.jpeg' },
             { id: 2, title: 'CODM: 420 CP', price: 5500, category: 'games', subTag: 'codm', icon: 'https://files.catbox.moe/w4tgaw.jpeg' },
@@ -502,6 +532,7 @@
             { id: 45, title: 'Google Play $10 Gift Card', price: 16200, category: 'giftcards', subTag: 'general', icon: 'https://files.catbox.moe/umckga.jpeg' },
             { id: 46, title: 'Steam $10 Gift Card', price: 16200, category: 'giftcards', subTag: 'general', icon: 'https://files.catbox.moe/vmei3z.webp' }
         ];
+        /* --- PRODUCTS DATABASE END --- */
 
         // Persistent State
         let products = JSON.parse(localStorage.getItem('naijacp_products')) || defaultProducts;
@@ -535,8 +566,18 @@
             }, 3500);
         }
 
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        function openModal(id) { 
+            document.getElementById(id).classList.remove('hidden'); 
+            if(id === 'processingModal' || id === 'sourceCodeModal') {
+                document.getElementById(id).classList.add('flex');
+            }
+        }
+        function closeModal(id) { 
+            document.getElementById(id).classList.add('hidden'); 
+            if(id === 'processingModal' || id === 'sourceCodeModal') {
+                document.getElementById(id).classList.remove('flex');
+            }
+        }
 
         function copyAccountNumber() {
             navigator.clipboard.writeText('7048972368');
@@ -663,7 +704,6 @@
             document.getElementById('progressBar').style.width = `${progress}%`;
             document.getElementById('sharesLeft').innerText = remaining;
 
-            // Updated with your GitHub site link below 👇
             const text = encodeURIComponent("🔥 Get 100% Free FreeFire Headshot Sensitivity & Buy Cheap Game Top-Ups at NAIJACP.NG! Check it out now: https://naijacp1.github.io/My-website-/");
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
@@ -732,7 +772,7 @@
             showToast("Settings uniquely optimized for your device! 🎯");
         }
 
-        /* Checkout Modal */
+        /* Checkout Modal & Processing Sequence */
         function openCheckout(productId) {
             currentSelectedItem = products.find(p => p.id === productId);
             if (!currentSelectedItem) return;
@@ -759,6 +799,7 @@
                 return;
             }
 
+            // Save order data locally
             const newOrder = {
                 id: Date.now(),
                 date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
@@ -775,12 +816,32 @@
             localStorage.setItem('naijacp_orders', JSON.stringify(orders));
             renderOrdersTable();
             
+            // Switch Modals
             closeModal('checkoutModal');
-            document.getElementById('orderForm').reset();
-            document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i> Click to choose receipt screenshot image`;
-            uploadedReceiptBase64 = '';
+            openModal('processingModal');
             
-            showToast("Order submitted successfully! Awaiting verification.");
+            // Setup Processing State
+            document.getElementById('processingTitle').innerText = "Processing Payment...";
+            document.getElementById('processingDesc').innerText = "Please wait while we securely submit your order and verify your screenshot.";
+            document.getElementById('processingSpinner').classList.remove('hidden');
+            document.getElementById('processingSuccessIcon').classList.add('hidden');
+            document.getElementById('closeProcessingBtn').classList.add('hidden');
+
+            // Simulate Network Delay & Show Success
+            setTimeout(() => {
+                document.getElementById('processingSpinner').classList.add('hidden');
+                document.getElementById('processingSuccessIcon').classList.remove('hidden');
+                document.getElementById('processingSuccessIcon').classList.add('flex');
+                
+                document.getElementById('processingTitle').innerText = "Order Successful! 🎉";
+                document.getElementById('processingDesc').innerText = "Your payment receipt has been submitted. Our admin will process your top-up shortly.";
+                document.getElementById('closeProcessingBtn').classList.remove('hidden');
+
+                // Clear the form for next time
+                document.getElementById('orderForm').reset();
+                document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i> Click to choose receipt screenshot image`;
+                uploadedReceiptBase64 = '';
+            }, 3000);
         }
 
         /* Admin Controls */
@@ -836,12 +897,13 @@
             const tbody = document.getElementById('packagesTableBody');
             tbody.innerHTML = products.map(p => `
                 <tr class="hover:bg-slate-900/50">
-                    <td class="p-3 text-lg">${p.icon}</td>
+                    <td class="p-3 text-lg">${p.icon.length > 5 ? `<img src="${p.icon}" class="w-6 h-6 rounded">` : p.icon}</td>
                     <td class="p-3 font-bold">${p.title}</td>
                     <td class="p-3 uppercase text-[10px]">${p.category}</td>
                     <td class="p-3 uppercase text-[10px] text-slate-400">${p.subTag}</td>
                     <td class="p-3 text-pink-400">₦${Number(p.price).toLocaleString()}</td>
                     <td class="p-3">
+                        <button class="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs font-bold hover:bg-blue-500 hover:text-white transition mr-1" onclick="editPackage(${p.id})">Edit</button>
                         <button class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-bold hover:bg-red-500 hover:text-white transition" onclick="deletePackage(${p.id})">Delete</button>
                     </td>
                 </tr>
@@ -850,20 +912,52 @@
 
         function savePackage(e) {
             e.preventDefault();
+            const idField = document.getElementById('pkgId').value;
+            
             const newPkg = {
-                id: Date.now(),
+                id: idField ? parseInt(idField) : Date.now(),
                 title: document.getElementById('pkgTitle').value,
                 price: Number(document.getElementById('pkgPrice').value),
                 category: document.getElementById('pkgCategory').value,
                 subTag: document.getElementById('pkgSubTag').value,
                 icon: document.getElementById('pkgIcon').value || '🎮'
             };
-            products.push(newPkg);
+
+            if (idField) {
+                // Update Existing
+                const index = products.findIndex(p => p.id === parseInt(idField));
+                products[index] = newPkg;
+                showToast("Package updated successfully!");
+            } else {
+                // Add New
+                products.push(newPkg);
+                showToast("Package added successfully!");
+            }
+            
             localStorage.setItem('naijacp_products', JSON.stringify(products));
             renderAdminPackagesTable();
             renderCatalog();
+            resetPkgForm();
+        }
+
+        function editPackage(id) {
+            const pkg = products.find(p => p.id === id);
+            if(pkg) {
+                document.getElementById('pkgId').value = pkg.id;
+                document.getElementById('pkgTitle').value = pkg.title;
+                document.getElementById('pkgPrice').value = pkg.price;
+                document.getElementById('pkgCategory').value = pkg.category;
+                document.getElementById('pkgSubTag').value = pkg.subTag;
+                document.getElementById('pkgIcon').value = pkg.icon;
+                document.getElementById('pkgSubmitBtn').innerText = "Update Package";
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function resetPkgForm() {
             document.getElementById('pkgForm').reset();
-            showToast("Package saved successfully!");
+            document.getElementById('pkgId').value = "";
+            document.getElementById('pkgSubmitBtn').innerText = "Save Package";
         }
 
         function deletePackage(id) {
@@ -883,7 +977,56 @@
             document.body.appendChild(anchor);
             anchor.click();
             anchor.remove();
-            showToast("Source Data Exported!");
+            showToast("Backup Data Exported!");
+        }
+
+        // GENERATE LIVE SOURCE CODE TO UPLOAD TO GITHUB
+        function generateSourceCode() {
+            // 1. Create an exact copy of the website as it is right now
+            let docClone = document.documentElement.cloneNode(true);
+
+            // 2. Remove things we don't want permanently saved (like open modals or popups)
+            let toastContainer = docClone.querySelector('#liveToastContainer');
+            if (toastContainer) toastContainer.innerHTML = '';
+
+            let modalsToHide = ['adminAuthModal', 'adminModal', 'checkoutModal', 'processingModal', 'sourceCodeModal', 'receiptPreviewModal'];
+            modalsToHide.forEach(id => {
+                let m = docClone.querySelector('#' + id);
+                if (m) {
+                    m.classList.add('hidden');
+                    m.classList.remove('flex');
+                }
+            });
+
+            // 3. Find our Products array and inject the live edited data directly into the code
+            let scripts = docClone.querySelectorAll('script');
+            let mainScript = Array.from(scripts).find(s => s.innerHTML.includes('/* --- PRODUCTS DATABASE START --- */'));
+
+            if (mainScript) {
+                // Convert current live products to a beautiful code string
+                let currentProductsJson = JSON.stringify(products, null, 12);
+                
+                // Replace everything between our special markers
+                let regex = /\/\* --- PRODUCTS DATABASE START --- \*\/[\s\S]*?\/\* --- PRODUCTS DATABASE END --- \*\//;
+                let replacement = `/* --- PRODUCTS DATABASE START --- */\n        let defaultProducts = ${currentProductsJson};\n        /* --- PRODUCTS DATABASE END --- */`;
+                
+                mainScript.innerHTML = mainScript.innerHTML.replace(regex, replacement);
+            }
+
+            // 4. Construct the final perfect HTML file text
+            let finalHTML = "<!DOCTYPE html>\n<html lang=\"en\">\n" + docClone.innerHTML + "\n</html>";
+
+            // 5. Open the modal and display the code
+            document.getElementById('sourceCodeArea').value = finalHTML;
+            openModal('sourceCodeModal');
+        }
+
+        function copySourceCode() {
+            const codeArea = document.getElementById('sourceCodeArea');
+            codeArea.select();
+            codeArea.setSelectionRange(0, 9999999); // Essential for mobile phones
+            navigator.clipboard.writeText(codeArea.value);
+            showToast("✅ Source code copied! Paste it into GitHub now.");
         }
     </script>
 </body>
